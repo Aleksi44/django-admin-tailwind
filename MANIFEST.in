@@ -1,0 +1,4 @@
+include *.rst
+include AUTHORS
+include LICENSE
+recursive-include django_admin_tailwind/templates *.html
