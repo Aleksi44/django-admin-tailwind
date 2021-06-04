@@ -58,9 +58,20 @@
             --svg-theme-dark-primary: currentColor;
             --svg-theme-dark-secondary: #FFF;
             --svg-theme-dark-tertiary: #FFF;
+
+        }
+
+        /* Alpine.js */
+
+        [x-cloak] {
+            display: none;
         }
     </style>
-    <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "django_admin_tailwind/dist/css/base-0.0.0.css" %}{% endblock %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% block stylesheet %}{% static "django_admin_tailwind/dist/css/base-0.0.0.css" %}{% endblock %}">
+    <link rel="stylesheet" href="https://static.snoweb.fr/snowebsvg/dist/css/themesauto-0.0.82.css">
+    <link rel="stylesheet" href="https://static.snoweb.fr/snowebsvg/dist/css/core-0.0.82.css">
+
     {% if not is_popup and is_nav_sidebar_enabled %}
         {% comment %}<link rel="stylesheet" type="text/css" href="{% static "admin/css/nav_sidebar.css" %}">{% endcomment %}
         <script src="{% static 'admin/js/nav_sidebar.js' %}" defer></script>
@@ -77,8 +88,15 @@
         <meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
 </head>
 
-<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
+<body class="bg-light-0 dark:bg-dark-0 {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
       data-admin-utc-offset="{% now "Z" %}">
+
+<!-- Glassmorphism effect -->
+<svg width="0" height="0">
+    <filter id="svg-filter-glass">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10"></feGaussianBlur>
+    </filter>
+</svg>
 
 <!-- Container -->
 <div id="container">
@@ -86,33 +104,115 @@
     {% if not is_popup %}
         <!-- Header -->
         {% block header %}
+
+
             <div id="header">
                 <div id="branding">
-                    {% block branding %}{% endblock %}
                 </div>
                 {% block usertools %}
                     {% if has_permission %}
-                        <div id="user-tools">
-                            {% block welcome-msg %}
-                                {% translate 'Welcome,' %}
-                                <strong>{% firstof user.get_short_name user.get_username %}</strong>.
-                            {% endblock %}
-                            {% block userlinks %}
-                                {% if site_url %}
-                                    <a href="{{ site_url }}">{% translate 'View site' %}</a> /
-                                {% endif %}
-                                {% if user.is_active and user.is_staff %}
-                                    {% url 'django-admindocs-docroot' as docsroot %}
-                                    {% if docsroot %}
-                                        <a href="{{ docsroot }}">{% translate 'Documentation' %}</a> /
-                                    {% endif %}
-                                {% endif %}
-                                {% if user.has_usable_password %}
-                                    <a href="{% url 'admin:password_change' %}">{% translate 'Change password' %}</a> /
-                                {% endif %}
-                                <a href="{% url 'admin:logout' %}">{% translate 'Log out' %}</a>
-                            {% endblock %}
-                        </div>
+                        <nav class="bg-light-800 dark:bg-dark-800">
+                            <div class="mx-auto px-2 sm:px-6 lg:px-8">
+                                <div class="relative flex items-center justify-between h-16">
+
+                                    <div class="flex-1 flex items-center items-stretch justify-start">
+                                        <div class="flex-shrink-0 flex items-center">
+                                            {% block branding %}{% endblock %}
+                                        </div>
+                                    </div>
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+
+                                        <!-- Profile dropdown -->
+                                        <div class="ml-3 relative"
+                                             x-data="{ dropdownUser: false }"
+                                             @click.away="dropdownUser = false">
+                                            <div>
+                                                <button @click="dropdownUser = true"
+                                                        type="button"
+                                                        class="svg-trigger bg-light-800 dark:bg-dark-800 dark:bg-dark-800 flex text-sm rounded-full focus:outline-none"
+                                                        id="user-menu-button"
+                                                        aria-expanded="false"
+                                                        aria-haspopup="true">
+                                                    <span class="sr-only">Open user menu</span>
+                                                    {% comment %}heroicons-user-small{% endcomment %}
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                         class="svg-snoweb h-8 w-8 rounded-full fill-current text-light-50 dark:text-dark-50"
+                                                         x="0" y="0" width="200"
+                                                         height="200" viewBox="0 0 100 100"
+                                                         preserveAspectRatio="xMidYMid meet">
+                                                        <clipPath
+                                                                id="clip-path-202106-0411-3654-81efd5d4-c6a0-4783-ace9-9d4f65a86ec8">
+                                                            <circle cx="50" cy="50" r="50"></circle>
+                                                        </clipPath>
+                                                        <g clip-path="url(#clip-path-202106-0411-3654-81efd5d4-c6a0-4783-ace9-9d4f65a86ec8)"
+                                                           transform="translate(0.00, 0.00) scale(1.00, 1.00)">
+                                                            <circle opacity="0.25" filter="url(#svg-filter-glass)"
+                                                                    class="svg-fill-tertiary" cx="50" cy="50" r="50">
+                                                            </circle>
+                                                            <circle opacity="0.25" filter="url(#svg-filter-glass)"
+                                                                    class="svg-fill-secondary svg-builder-circle"
+                                                                    cx="50" cy="50" r="50">
+                                                            </circle>
+                                                        </g>
+                                                        <g transform="translate(25.00, 25.00) scale(0.50, 0.50)">
+                                                            <path d="M50,42.5a15,15,0,1,0-15-15A15,15,0,0,0,50,42.5ZM15.1,87.4a34.9,34.9,0,0,1,69.8,0Z"
+                                                                  class="svg-fill-primary"
+                                                                  fill-rule="evenodd"></path>
+                                                        </g>
+                                                    </svg>
+                                                </button>
+                                            </div>
+
+                                            <div x-description="Dropdown menu, show/hide based on menu state."
+                                                 x-show="dropdownUser"
+                                                 x-transition:enter="ease-out duration-100"
+                                                 x-transition:enter-start="opacity-0 scale-95"
+                                                 x-transition:enter-end="opacity-100 scale-100"
+                                                 x-transition:leave="duration-100 ease-in duration-75"
+                                                 x-transition:leave-start="opacity-100 scale-100"
+                                                 x-transition:leave-end="opacity-0 scale-95"
+                                                 x-cloak
+                                                 class="z-30 transition origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-light-0 dark:bg-dark-0 focus:outline-none"
+                                                 role="menu"
+                                                 aria-orientation="vertical"
+                                                 aria-labelledby="user-menu-button"
+                                                 tabindex="-1">
+                                                {% block userlinks %}
+                                                    {% if site_url %}
+                                                        <a href="{{ site_url }}"
+                                                           class="block px-4 py-2 text-sm text-light-700 dark:text-dark-700"
+                                                           role="menuitem"
+                                                           tabindex="-1"
+                                                           id="user-menu-item-0">{% translate 'View site' %}</a>
+                                                    {% endif %}
+                                                    {% if user.is_active and user.is_staff %}
+                                                        {% url 'django-admindocs-docroot' as docsroot %}
+                                                        {% if docsroot %}
+                                                            <a href="{{ docsroot }}"
+                                                               class="block px-4 py-2 text-sm text-light-700 dark:text-dark-700"
+                                                               role="menuitem"
+                                                               tabindex="-1"
+                                                               id="user-menu-item-0">{% translate 'Documentation' %}</a>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                    {% if user.has_usable_password %}
+                                                        <a href="{% url 'admin:password_change' %}"
+                                                           class="block px-4 py-2 text-sm text-light-700 dark:text-dark-700"
+                                                           role="menuitem"
+                                                           tabindex="-1"
+                                                           id="user-menu-item-0">{% translate 'Change password' %}</a>
+                                                    {% endif %}
+                                                    <a href="{% url 'admin:logout' %}"
+                                                       class="block px-4 py-2 text-sm text-light-700 dark:text-dark-700"
+                                                       role="menuitem"
+                                                       tabindex="-1" id="user-menu-item-0">{% translate 'Log out' %}</a>
+                                                {% endblock %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
                     {% endif %}
                 {% endblock %}
                 {% block nav-global %}{% endblock %}
@@ -120,20 +220,50 @@
         {% endblock %}
         <!-- END Header -->
         {% block breadcrumbs %}
-            <div class="breadcrumbs">
-                <a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
-                {% if title %} &rsaquo; {{ title }}{% endif %}
-            </div>
+            <nav class="border-b border-light-200 dark:border-dark-200 flex" aria-label="Breadcrumb">
+                <ol class="w-full mx-auto px-4 flex space-x-4 sm:px-6 lg:px-8">
+                    <li class="flex">
+                        <div class="flex items-center">
+                            <a href="{% url 'admin:index' %}">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     class="svg-snoweb svg-flex-shrink-0 h-5 w-5 fill-current text-light-900 dark:text-dark-900"
+                                     x="0"
+                                     y="0"
+                                     width="100%"
+                                     height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                                    <path d="M53.3,13.9a4.7,4.7,0,0,0-6.6,0L13.9,46.7a4.7,4.7,0,0,0,0,6.6,4.8,4.8,0,0,0,6.7,0l1.3-1.4V82.7a4.7,4.7,0,0,0,4.7,4.7H36a4.7,4.7,0,0,0,4.6-4.7V73.4a4.7,4.7,0,0,1,4.7-4.7h9.4a4.7,4.7,0,0,1,4.7,4.7v9.3A4.7,4.7,0,0,0,64,87.4h9.4a4.7,4.7,0,0,0,4.7-4.7V51.9l1.3,1.4a4.8,4.8,0,0,0,6.7,0,4.7,4.7,0,0,0,0-6.6Z"
+                                          class="svg-fill-primary"></path>
+                                </svg>
+                                <span class="sr-only">{% translate 'Home' %}</span>
+                            </a>
+                        </div>
+                    </li>
+                    {% if title %}
+                        <li class="flex">
+                            <div class="flex items-center">
+                                <svg class="flex-shrink-0 w-6 h-full text-light-200 dark:text-dark-200"
+                                     viewBox="0 0 24 44"
+                                     preserveAspectRatio="none" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                                     aria-hidden="true">
+                                    <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z"/>
+                                </svg>
+                                <span class="ml-4 text-sm font-medium text-light-300 dark:text-dark-300"
+                                      aria-current="page">{{ title }}</span>
+                            </div>
+                        </li>
+                    {% endif %}
+                </ol>
+            </nav>
         {% endblock %}
     {% endif %}
 
-    <div class="main" id="main">
+    <div id="main" class="h-screen flex overflow-hidden">
         {% if not is_popup and is_nav_sidebar_enabled %}
             {% block nav-sidebar %}
                 {% include "admin/nav_sidebar.html" %}
             {% endblock %}
         {% endif %}
-        <div class="content">
+        <div class="flex flex-col w-0 flex-1 overflow-hidden">
             {% block messages %}
                 {% if messages %}
                     <ul class="messagelist">{% for message in messages %}
@@ -144,8 +274,23 @@
             <!-- Content -->
             <div id="content" class="{% block coltype %}colM{% endblock %}">
                 {% block pretitle %}{% endblock %}
-                {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
-                {% block content_subtitle %}{% if subtitle %}<h2>{{ subtitle }}</h2>{% endif %}{% endblock %}
+                <div class="py-6">
+                    <div class="pb-5 border-b border-light-200 dark:border-dark-200">
+                        {% block content_title %}
+                            {% if title %}
+                                <h1 class="text-lg leading-6 font-medium text-light-900 dark:text-dark-900">
+                                    {{ title }}
+                                </h1>
+                            {% endif %}
+                        {% endblock %}
+                        {% block content_subtitle %}
+                            {% if subtitle %}
+                                <p class="mt-2 max-w-4xl text-sm text-light-500 dark:text-dark-500">{{ subtitle }}</p>
+                                <h2></h2>
+                            {% endif %}
+                        {% endblock %}
+                    </div>
+                </div>
                 {% block content %}
                     {% block object-tools %}{% endblock %}
                     {{ content }}
@@ -160,5 +305,7 @@
     </div>
 </div>
 <!-- END Container -->
+
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 </body>
 </html>

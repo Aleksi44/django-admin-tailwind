@@ -1,40 +1,143 @@
 {% load i18n %}
 
+
 {% if app_list %}
-  {% for app in app_list %}
-    <div class="app-{{ app.app_label }} module{% if app.app_url in request.path %} current-app{% endif %}">
-      <table>
-        <caption>
-          <a href="{{ app.app_url }}" class="section" title="{% blocktranslate with name=app.name %}Models in the {{ name }} application{% endblocktranslate %}">{{ app.name }}</a>
-        </caption>
-        {% for model in app.models %}
-          <tr class="model-{{ model.object_name|lower }}{% if model.admin_url in request.path %} current-model{% endif %}">
-            {% if model.admin_url %}
-              <th scope="row"><a href="{{ model.admin_url }}"{% if model.admin_url in request.path %} aria-current="page"{% endif %}>{{ model.name }}</a></th>
-            {% else %}
-              <th scope="row">{{ model.name }}</th>
-            {% endif %}
 
-            {% if model.add_url %}
-              <td><a href="{{ model.add_url }}" class="addlink">{% translate 'Add' %}</a></td>
-            {% else %}
-              <td></td>
-            {% endif %}
+    {% for app in app_list %}
 
-            {% if model.admin_url and show_changelinks %}
-              {% if model.view_only %}
-                <td><a href="{{ model.admin_url }}" class="viewlink">{% translate 'View' %}</a></td>
-              {% else %}
-                <td><a href="{{ model.admin_url }}" class="changelink">{% translate 'Change' %}</a></td>
-              {% endif %}
-            {% elif show_changelinks %}
-              <td></td>
-            {% endif %}
-          </tr>
-        {% endfor %}
-      </table>
-    </div>
-  {% endfor %}
+        <div class="flex flex-col">
+            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="overflow-hidden border-b border-light-200 dark:border-dark-200">
+                        <table class="min-w-full divide-y divide-light-200 dark:divide-dark-200">
+                            <thead class="bg-light-50 dark:bg-dark-50">
+                            <tr>
+                                <th colspan="3"
+                                    class="px-6 py-3 text-left text-xs font-medium text-light-500 dark:text-dark-500 uppercase tracking-wider">
+                                    <a href="{{ app.app_url }}" class="section"
+                                       title="{% blocktranslate with name=app.name %}Models in the {{ name }} application{% endblocktranslate %}">{{ app.name }}</a>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="divide-y divide-light-200 dark:divide-dark-200">
+                            {% for model in app.models %}
+
+                                <tr>
+                                {% if model.admin_url %}
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-light-500 dark:text-dark-500">
+                                        <a href="{{ model.admin_url }}"
+                                                {% if model.admin_url in request.path %}
+                                           aria-current="page"{% endif %}>{{ model.name }}</a>
+                                    </td>
+                                {% else %}
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-light-500 dark:text-dark-500">
+                                        {{ model.name }}
+                                    </td>
+                                {% endif %}
+
+
+
+                                {% if model.add_url %}
+                                    <td>
+                                        <a href="{{ model.add_url }}"
+                                           class="inline-flex items-center shadow-sm px-2.5 py-0.5 border text-sm leading-5 font-medium rounded-full border-light-300 text-light-700 hover:bg-light-50 dark:border-dark-300 dark:text-dark-700 bg-light-0 dark:bg-dark-0 hover:dark:bg-dark-50">
+                                            {% translate 'Add' %}
+                                        </a>
+                                    </td>
+                                {% else %}
+                                {% endif %}
+
+                                {% if model.admin_url and show_changelinks %}
+                                    {% if model.view_only %}
+                                        <td>
+                                            <a href="{{ model.admin_url }}"
+                                               class="inline-flex items-center shadow-sm px-2.5 py-0.5 border text-sm leading-5 font-medium rounded-full border-light-300 text-light-700 hover:bg-light-50 dark:border-dark-300 dark:text-dark-700 bg-light-0 dark:bg-dark-0 hover:dark:bg-dark-50">
+                                                {% translate 'View' %}
+                                            </a>
+                                        </td>
+                                    {% else %}
+                                        <td>
+                                            <a href="{{ model.admin_url }}"
+                                               class="inline-flex items-center shadow-sm px-2.5 py-0.5 border text-sm leading-5 font-medium rounded-full border-light-300 text-light-700 hover:bg-light-50 dark:border-dark-300 dark:text-dark-700 bg-light-0 dark:bg-dark-0 hover:dark:bg-dark-50">
+                                                {% translate 'Change' %}
+                                            </a>
+                                        </td>
+                                    {% endif %}
+                                {% elif show_changelinks %}
+                                {% endif %}
+
+                            {% endfor %}
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% comment %}
+
+            <h3 class="text-md font-medium text-light-900 dark:text-dark-900"
+                id="teams-headline">
+
+            </h3>
+            <div class="mt-1 space-y-1" role="group" aria-labelledby="apps">
+                <div class="flow-root mt-6">
+                    <ul class="-my-5 divide-y divide-light-200 dark:divide-dark-200">
+
+                        {% for model in app.models %}
+
+                            <li class="py-4">
+                                <div class="flex items-center space-x-4">
+                                    {% if model.admin_url %}
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-light-900 dark:text-dark-900 truncate">
+                                                <a href="{{ model.admin_url }}" {% if model.admin_url in request.path %}
+                                                   aria-current="page"{% endif %}>{{ model.name }}</a>
+                                            </p>
+                                        </div>
+                                    {% else %}
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-light-900 dark:text-dark-900 truncate">
+                                                {{ model.name }}
+                                            </p>
+                                        </div>
+                                    {% endif %}
+
+                                    {% if model.add_url %}
+                                        <div>
+                                            <a href="{{ model.add_url }}"
+                                               class="inline-flex items-center shadow-sm px-2.5 py-0.5 border text-sm leading-5 font-medium rounded-full border-light-300 text-light-700 hover:bg-light-50 dark:border-dark-300 dark:text-dark-700 bg-light-0 dark:bg-dark-0 hover:dark:bg-dark-50">
+                                                {% translate 'Add' %}
+                                            </a>
+                                        </div>
+                                    {% else %}
+                                    {% endif %}
+
+                                    {% if model.admin_url and show_changelinks %}
+                                        {% if model.view_only %}
+                                            <div>
+                                                <a href="{{ model.admin_url }}"
+                                                   class="inline-flex items-center shadow-sm px-2.5 py-0.5 border text-sm leading-5 font-medium rounded-full border-light-300 text-light-700 hover:bg-light-50 dark:border-dark-300 dark:text-dark-700 bg-light-0 dark:bg-dark-0 hover:dark:bg-dark-50">
+                                                    {% translate 'View' %}
+                                                </a>
+                                            </div>
+                                        {% else %}
+                                            <div>
+                                                <a href="{{ model.admin_url }}"
+                                                   class="inline-flex items-center shadow-sm px-2.5 py-0.5 border text-sm leading-5 font-medium rounded-full border-light-300 text-light-700 hover:bg-light-50 dark:border-dark-300 dark:text-dark-700 bg-light-0 dark:bg-dark-0 hover:dark:bg-dark-50">
+                                                    {% translate 'Change' %}
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                    {% elif show_changelinks %}
+                                    {% endif %}
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>{% endcomment %}
+    {% endfor %}
 {% else %}
-  <p>{% translate 'You don’t have permission to view or edit anything.' %}</p>
+    <p>{% translate 'You don’t have permission to view or edit anything.' %}</p>
 {% endif %}

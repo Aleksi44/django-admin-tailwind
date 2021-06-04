@@ -7,49 +7,103 @@
     <script src="{% static 'admin/js/cancel.js' %}" async></script>
 {% endblock %}
 
-{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} delete-confirmation delete-selected-confirmation{% endblock %}
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} delete-confirmation
+    delete-selected-confirmation{% endblock %}
 
 {% block breadcrumbs %}
-<div class="breadcrumbs">
-<a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
-&rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
-&rsaquo; <a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
-&rsaquo; {% translate 'Delete multiple objects' %}
-</div>
+    <nav class="border-b border-light-200 dark:border-dark-200 flex"
+         aria-label="Breadcrumb">
+        <ol class="w-full mx-auto px-4 flex space-x-4 sm:px-6 lg:px-8">
+            <li class="flex">
+                <div class="flex items-center">
+                    <a href="{% url 'admin:index' %}">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="svg-snoweb svg-flex-shrink-0 h-5 w-5 fill-current text-light-900 dark:text-dark-900"
+                             x="0"
+                             y="0"
+                             width="100%"
+                             height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                            <path d="M53.3,13.9a4.7,4.7,0,0,0-6.6,0L13.9,46.7a4.7,4.7,0,0,0,0,6.6,4.8,4.8,0,0,0,6.7,0l1.3-1.4V82.7a4.7,4.7,0,0,0,4.7,4.7H36a4.7,4.7,0,0,0,4.6-4.7V73.4a4.7,4.7,0,0,1,4.7-4.7h9.4a4.7,4.7,0,0,1,4.7,4.7v9.3A4.7,4.7,0,0,0,64,87.4h9.4a4.7,4.7,0,0,0,4.7-4.7V51.9l1.3,1.4a4.8,4.8,0,0,0,6.7,0,4.7,4.7,0,0,0,0-6.6Z"
+                                  class="svg-fill-primary"></path>
+                        </svg>
+                        <span class="sr-only">{% translate 'Home' %}</span>
+                    </a>
+                </div>
+            </li>
+            <li class="flex">
+                <div class="flex items-center">
+                    <svg class="flex-shrink-0 w-6 h-full fill-current text-light-200 dark:text-dark-200" viewBox="0 0 24 44"
+                         preserveAspectRatio="none" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                         aria-hidden="true">
+                        <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z"/>
+                    </svg>
+                    <a href="{% url 'admin:app_list' app_label=opts.app_label %}"
+                       class="ml-4 text-sm font-medium text-light-500 hover:text-light-700 dark:text-dark-500 dark:hover:text-dark-700">
+                        {{ opts.app_config.verbose_name }}</a>
+                </div>
+            </li>
+            <li class="flex">
+                <div class="flex items-center">
+                    <svg class="flex-shrink-0 w-6 h-full fill-current text-light-200 dark:text-dark-200" viewBox="0 0 24 44"
+                         preserveAspectRatio="none" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                         aria-hidden="true">
+                        <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z"/>
+                    </svg>
+                    <a href="{% url opts|admin_urlname:'changelist' %}"
+                       class="ml-4 text-sm font-medium text-light-500 hover:text-light-700 dark:text-dark-500 dark:hover:text-dark-700">
+                        {{ opts.verbose_name_plural|capfirst }}</a>
+                </div>
+            </li>
+            <li class="flex">
+                <div class="flex items-center">
+                    <svg class="flex-shrink-0 w-6 h-full text-light-200 dark:text-dark-200" viewBox="0 0 24 44"
+                         preserveAspectRatio="none" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                         aria-hidden="true">
+                        <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z"/>
+                    </svg>
+                    <span class="ml-4 text-sm font-medium text-light-300 dark:text-dark-300"
+                          aria-current="page">{% translate 'Delete multiple objects' %}</span>
+                </div>
+            </li>
+        </ol>
+    </nav>
 {% endblock %}
 
 {% block content %}
-{% if perms_lacking %}
-    <p>{% blocktranslate %}Deleting the selected {{ objects_name }} would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:{% endblocktranslate %}</p>
-    <ul>
-    {% for obj in perms_lacking %}
-        <li>{{ obj }}</li>
-    {% endfor %}
-    </ul>
-{% elif protected %}
-    <p>{% blocktranslate %}Deleting the selected {{ objects_name }} would require deleting the following protected related objects:{% endblocktranslate %}</p>
-    <ul>
-    {% for obj in protected %}
-        <li>{{ obj }}</li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>{% blocktranslate %}Are you sure you want to delete the selected {{ objects_name }}? All of the following objects and their related items will be deleted:{% endblocktranslate %}</p>
-    {% include "admin/includes/object_delete_summary.html" %}
-    <h2>{% translate "Objects" %}</h2>
-    {% for deletable_object in deletable_objects %}
-        <ul>{{ deletable_object|unordered_list }}</ul>
-    {% endfor %}
-    <form method="post">{% csrf_token %}
-    <div>
-    {% for obj in queryset %}
-    <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk|unlocalize }}">
-    {% endfor %}
-    <input type="hidden" name="action" value="delete_selected">
-    <input type="hidden" name="post" value="yes">
-    <input type="submit" value="{% translate 'Yes, I’m sure' %}">
-    <a href="#" class="button cancel-link">{% translate "No, take me back" %}</a>
-    </div>
-    </form>
-{% endif %}
+    {% if perms_lacking %}
+        <p>{% blocktranslate %}Deleting the selected {{ objects_name }} would result in deleting related objects, but
+            your account doesn't have permission to delete the following types of objects:{% endblocktranslate %}</p>
+        <ul>
+            {% for obj in perms_lacking %}
+                <li>{{ obj }}</li>
+            {% endfor %}
+        </ul>
+    {% elif protected %}
+        <p>{% blocktranslate %}Deleting the selected {{ objects_name }} would require deleting the following protected
+            related objects:{% endblocktranslate %}</p>
+        <ul>
+            {% for obj in protected %}
+                <li>{{ obj }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>{% blocktranslate %}Are you sure you want to delete the selected {{ objects_name }}? All of the following
+            objects and their related items will be deleted:{% endblocktranslate %}</p>
+        {% include "admin/includes/object_delete_summary.html" %}
+        <h2>{% translate "Objects" %}</h2>
+        {% for deletable_object in deletable_objects %}
+            <ul>{{ deletable_object|unordered_list }}</ul>
+        {% endfor %}
+        <form method="post">{% csrf_token %}
+            <div>
+                {% for obj in queryset %}
+                    <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk|unlocalize }}">
+                {% endfor %}
+                <input type="hidden" name="action" value="delete_selected">
+                <input type="hidden" name="post" value="yes">
+                <input type="submit" value="{% translate 'Yes, I’m sure' %}">
+                <a href="#" class="button cancel-link">{% translate "No, take me back" %}</a>
+            </div>
+        </form>
+    {% endif %}
 {% endblock %}

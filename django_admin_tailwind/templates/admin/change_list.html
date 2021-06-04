@@ -1,86 +1,130 @@
 {% extends "admin/base_site.html" %}
 {% load i18n admin_urls static admin_list %}
 
-{% block extrastyle %}
-  {{ block.super }}
-  <link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}">
-  {% if cl.formset %}
-    <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">
-  {% endif %}
-  {% if cl.formset or action_form %}
-    <script src="{% url 'admin:jsi18n' %}"></script>
-  {% endif %}
-  {{ media.css }}
-  {% if not actions_on_top and not actions_on_bottom %}
-    <style>
-      #changelist table thead th:first-child {width: inherit}
-    </style>
-  {% endif %}
-{% endblock %}
+{% comment %}{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}">
+    {% if cl.formset %}
+        <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">
+    {% endif %}
+    {% if cl.formset or action_form %}
+        <script src="{% url 'admin:jsi18n' %}"></script>
+    {% endif %}
+    {{ media.css }}
+    {% if not actions_on_top and not actions_on_bottom %}
+        <style>
+            #changelist table thead th:first-child {
+                width: inherit
+            }
+        </style>
+    {% endif %}
+{% endblock %}{% endcomment %}
 
 {% block extrahead %}
-{{ block.super }}
-{{ media.js }}
+    {{ block.super }}
+    {{ media.js }}
 {% endblock %}
 
 {% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-list{% endblock %}
 
 {% if not is_popup %}
-{% block breadcrumbs %}
-<div class="breadcrumbs">
-<a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
-&rsaquo; <a href="{% url 'admin:app_list' app_label=cl.opts.app_label %}">{{ cl.opts.app_config.verbose_name }}</a>
-&rsaquo; {{ cl.opts.verbose_name_plural|capfirst }}
-</div>
-{% endblock %}
+    {% block breadcrumbs %}
+        <nav class="border-b border-light-200 dark:border-dark-200 flex"
+             aria-label="Breadcrumb">
+            <ol class="w-full mx-auto px-4 flex space-x-4 sm:px-6 lg:px-8">
+                <li class="flex">
+                    <div class="flex items-center">
+                        <a href="{% url 'admin:index' %}">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 class="svg-snoweb svg-flex-shrink-0 h-5 w-5 fill-current text-light-900 dark:text-dark-900"
+                                 x="0"
+                                 y="0"
+                                 width="100%"
+                                 height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                                <path d="M53.3,13.9a4.7,4.7,0,0,0-6.6,0L13.9,46.7a4.7,4.7,0,0,0,0,6.6,4.8,4.8,0,0,0,6.7,0l1.3-1.4V82.7a4.7,4.7,0,0,0,4.7,4.7H36a4.7,4.7,0,0,0,4.6-4.7V73.4a4.7,4.7,0,0,1,4.7-4.7h9.4a4.7,4.7,0,0,1,4.7,4.7v9.3A4.7,4.7,0,0,0,64,87.4h9.4a4.7,4.7,0,0,0,4.7-4.7V51.9l1.3,1.4a4.8,4.8,0,0,0,6.7,0,4.7,4.7,0,0,0,0-6.6Z"
+                                      class="svg-fill-primary"></path>
+                            </svg>
+                            <span class="sr-only">{% translate 'Home' %}</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="flex">
+                    <div class="flex items-center">
+                        <svg class="flex-shrink-0 w-6 h-full fill-current text-light-200 dark:text-dark-200" viewBox="0 0 24 44"
+                             preserveAspectRatio="none" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                             aria-hidden="true">
+                            <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z"/>
+                        </svg>
+                        <a href="{% url 'admin:app_list' app_label=cl.opts.app_label %}"
+                           class="ml-4 text-sm font-medium text-light-500 hover:text-light-700 dark:text-dark-500 dark:hover:text-dark-700">
+                            {{ cl.opts.app_config.verbose_name }}</a>
+                    </div>
+                </li>
+                <li class="flex">
+                    <div class="flex items-center">
+                        <svg class="flex-shrink-0 w-6 h-full text-light-200 dark:text-dark-200" viewBox="0 0 24 44"
+                             preserveAspectRatio="none" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                             aria-hidden="true">
+                            <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z"/>
+                        </svg>
+                        <span class="ml-4 text-sm font-medium text-light-300 dark:text-dark-300"
+                              aria-current="page">{{ cl.opts.verbose_name_plural|capfirst }}</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+    {% endblock %}
 {% endif %}
 
 {% block coltype %}{% endblock %}
 
 {% block content %}
-  <div id="content-main">
-    {% block object-tools %}
-        <ul class="object-tools">
-          {% block object-tools-items %}
-            {% change_list_object_tools %}
-          {% endblock %}
-        </ul>
-    {% endblock %}
-    {% if cl.formset and cl.formset.errors %}
-        <p class="errornote">
-        {% if cl.formset.total_error_count == 1 %}{% translate "Please correct the error below." %}{% else %}{% translate "Please correct the errors below." %}{% endif %}
-        </p>
-        {{ cl.formset.non_form_errors }}
-    {% endif %}
-    <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
-      <div class="changelist-form-container">
-        {% block search %}{% search_form cl %}{% endblock %}
-        {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
-
-        <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
-        {% if cl.formset %}
-          <div>{{ cl.formset.management_form }}</div>
-        {% endif %}
-
-        {% block result_list %}
-          {% if action_form and actions_on_top and cl.show_admin_actions %}{% admin_actions %}{% endif %}
-          {% result_list cl %}
-          {% if action_form and actions_on_bottom and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+    <div id="content-main">
+        {% block object-tools %}
+            <ul class="object-tools">
+                {% block object-tools-items %}
+                    {% change_list_object_tools %}
+                {% endblock %}
+            </ul>
         {% endblock %}
-        {% block pagination %}{% pagination cl %}{% endblock %}
-        </form>
-      </div>
-      {% block filters %}
-        {% if cl.has_filters %}
-          <div id="changelist-filter">
-            <h2>{% translate 'Filter' %}</h2>
-            {% if cl.has_active_filters %}<h3 id="changelist-filter-clear">
-              <a href="{{ cl.clear_all_filters_qs }}">&#10006; {% translate "Clear all filters" %}</a>
-            </h3>{% endif %}
-            {% for spec in cl.filter_specs %}{% admin_list_filter cl spec %}{% endfor %}
-          </div>
+        {% if cl.formset and cl.formset.errors %}
+            <p class="errornote">
+                {% if cl.formset.total_error_count == 1 %}{% translate "Please correct the error below." %}{% else %}
+                    {% translate "Please correct the errors below." %}{% endif %}
+            </p>
+            {{ cl.formset.non_form_errors }}
         {% endif %}
-      {% endblock %}
+        <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
+            <div class="changelist-form-container">
+                {% block search %}{% search_form cl %}{% endblock %}
+                {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
+
+                <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %}
+                      enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
+                    {% if cl.formset %}
+                        <div>{{ cl.formset.management_form }}</div>
+                    {% endif %}
+
+                    {% block result_list %}
+                        {% if action_form and actions_on_top and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+                        {% result_list cl %}
+                        {% if action_form and actions_on_bottom and cl.show_admin_actions %}
+                            {% admin_actions %}{% endif %}
+                    {% endblock %}
+                    {% block pagination %}{% pagination cl %}{% endblock %}
+                </form>
+            </div>
+            {% block filters %}
+                {% if cl.has_filters %}
+                    <div id="changelist-filter">
+                        <h2>{% translate 'Filter' %}</h2>
+                        {% if cl.has_active_filters %}<h3 id="changelist-filter-clear">
+                            <a href="{{ cl.clear_all_filters_qs }}">&#10006; {% translate "Clear all filters" %}</a>
+                        </h3>{% endif %}
+                        {% for spec in cl.filter_specs %}{% admin_list_filter cl spec %}{% endfor %}
+                    </div>
+                {% endif %}
+            {% endblock %}
+        </div>
     </div>
-  </div>
 {% endblock %}

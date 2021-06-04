@@ -19,16 +19,15 @@
 
 {% block breadcrumbs %}{% endblock %}
 
-{% block branding %}
+{% block content %}
+
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
-        {{ block.super }}
+        <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+             alt="Workflow">
         <h2 class="mt-6 text-center text-3xl font-extrabold text-light-900 dark:text-dark-900">
             {% translate "Sign in to your account" %}
         </h2>
     </div>
-{% endblock %}
-
-{% block content %}
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="bg-light-0 dark:bg-dark-0 py-8 px-4 shadow sm:rounded-lg sm:px-10">
