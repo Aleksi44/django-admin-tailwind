@@ -236,42 +236,42 @@
             {% endblock %}
         {% endif %}
         {% block messages %}
-                {% if messages %}
-                    <ul class="messagelist">{% for message in messages %}
-                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
-                    {% endfor %}</ul>
-                {% endif %}
-            {% endblock messages %}
-            <!-- Content -->
-            <div id="content" class="w-full">
-                {% block pretitle %}{% endblock %}
-                <div class="py-6 border-b border-light-200 dark:border-dark-200">
-                    {% block content_title %}
-                        {% if title %}
-                            <h1 class="spacing-x-regular text-lg leading-6 font-medium text-light-900 dark:text-dark-900">
-                                {{ title }}
-                            </h1>
-                        {% endif %}
-                    {% endblock %}
-                    {% block content_subtitle %}
-                        {% if subtitle %}
-                            <p class="mt-2 max-w-4xl text-sm text-light-500 dark:text-dark-500">{{ subtitle }}</p>
-                            <h2></h2>
-                        {% endif %}
-                    {% endblock %}
-                </div>
-
-                <div class="lg:flex lg:flex-shrink-0">
-                    {% block content %}
-                        {% block object-tools %}{% endblock %}
-                        {{ content }}
-                    {% endblock %}
-                    {% block sidebar %}{% endblock %}
-                </div>
+            {% if messages %}
+                <ul class="messagelist">{% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
+                {% endfor %}</ul>
+            {% endif %}
+        {% endblock messages %}
+        <!-- Content -->
+        <div id="content" class="flex-1 {% block contentclass %}{% endblock %}">
+            {% block pretitle %}{% endblock %}
+            <div class="py-6">
+                {% block content_title %}
+                    {% if title %}
+                        <h1 class="spacing-x-regular text-lg leading-6 font-medium">
+                            {{ title }}
+                        </h1>
+                    {% endif %}
+                {% endblock %}
+                {% block content_subtitle %}
+                    {% if subtitle %}
+                        <p class="mt-2 max-w-4xl text-sm text-light-500 dark:text-dark-500">{{ subtitle }}</p>
+                        <h2></h2>
+                    {% endif %}
+                {% endblock %}
             </div>
-            <!-- END Content -->
-            {% block footer %}
-                <div id="footer"></div>{% endblock %}
+
+            <div class="lg:flex lg:flex-shrink-0">
+                {% block content %}
+                    {% block object-tools %}{% endblock %}
+                    {{ content }}
+                {% endblock %}
+                {% block sidebar %}{% endblock %}
+            </div>
+        </div>
+        <!-- END Content -->
+        {% block footer %}
+            <div id="footer"></div>{% endblock %}
     </div>
 </div>
 <!-- END Container -->
