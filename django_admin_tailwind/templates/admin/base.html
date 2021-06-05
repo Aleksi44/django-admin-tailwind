@@ -68,10 +68,7 @@
         }
     </style>
     <link rel="stylesheet" type="text/css"
-          href="{% block stylesheet %}{% static "django_admin_tailwind/dist/css/base-0.0.0.css" %}{% endblock %}">
-    <link rel="stylesheet" href="https://static.snoweb.fr/snowebsvg/dist/css/themesauto-0.0.82.css">
-    <link rel="stylesheet" href="https://static.snoweb.fr/snowebsvg/dist/css/core-0.0.82.css">
-
+          href="{% block stylesheet %}{% static "django_admin_tailwind/dist/css/base-0.0.0.css" %}{% endblock %}"
     {% if not is_popup and is_nav_sidebar_enabled %}
         {% comment %}<link rel="stylesheet" type="text/css" href="{% static "admin/css/nav_sidebar.css" %}">{% endcomment %}
         <script src="{% static 'admin/js/nav_sidebar.js' %}" defer></script>
@@ -91,37 +88,26 @@
 <body class="bg-light-0 dark:bg-dark-0 {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
       data-admin-utc-offset="{% now "Z" %}">
 
-<!-- Glassmorphism effect -->
-<svg width="0" height="0">
-    <filter id="svg-filter-glass">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="10"></feGaussianBlur>
-    </filter>
-</svg>
-
 <!-- Container -->
 <div id="container">
 
     {% if not is_popup %}
         <!-- Header -->
         {% block header %}
-
-
-            <div id="header">
+            <div id="header" class="border-b border-light-200 dark:border-dark-200">
                 <div id="branding">
                 </div>
                 {% block usertools %}
                     {% if has_permission %}
-                        <nav class="bg-light-800 dark:bg-dark-800">
-                            <div class="mx-auto px-2 sm:px-6 lg:px-8">
+                        <nav class="bg-light-100 dark:bg-dark-100">
+                            <div class="mx-auto spacing-x-regular">
                                 <div class="relative flex items-center justify-between h-16">
-
                                     <div class="flex-1 flex items-center items-stretch justify-start">
                                         <div class="flex-shrink-0 flex items-center">
                                             {% block branding %}{% endblock %}
                                         </div>
                                     </div>
                                     <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-
                                         <!-- Profile dropdown -->
                                         <div class="ml-3 relative"
                                              x-data="{ dropdownUser: false }"
@@ -137,24 +123,10 @@
                                                     {% comment %}heroicons-user-small{% endcomment %}
                                                     <svg xmlns="http://www.w3.org/2000/svg"
                                                          class="svg-snoweb h-8 w-8 rounded-full fill-current text-light-50 dark:text-dark-50"
-                                                         x="0" y="0" width="200"
-                                                         height="200" viewBox="0 0 100 100"
+                                                         x="0" y="0" width="100%"
+                                                         height="100%" viewBox="0 0 100 100"
                                                          preserveAspectRatio="xMidYMid meet">
-                                                        <clipPath
-                                                                id="clip-path-202106-0411-3654-81efd5d4-c6a0-4783-ace9-9d4f65a86ec8">
-                                                            <circle cx="50" cy="50" r="50"></circle>
-                                                        </clipPath>
-                                                        <g clip-path="url(#clip-path-202106-0411-3654-81efd5d4-c6a0-4783-ace9-9d4f65a86ec8)"
-                                                           transform="translate(0.00, 0.00) scale(1.00, 1.00)">
-                                                            <circle opacity="0.25" filter="url(#svg-filter-glass)"
-                                                                    class="svg-fill-tertiary" cx="50" cy="50" r="50">
-                                                            </circle>
-                                                            <circle opacity="0.25" filter="url(#svg-filter-glass)"
-                                                                    class="svg-fill-secondary svg-builder-circle"
-                                                                    cx="50" cy="50" r="50">
-                                                            </circle>
-                                                        </g>
-                                                        <g transform="translate(25.00, 25.00) scale(0.50, 0.50)">
+                                                        <g transform="translate(12.50, 12.50) scale(0.75, 0.75)">
                                                             <path d="M50,42.5a15,15,0,1,0-15-15A15,15,0,0,0,50,42.5ZM15.1,87.4a34.9,34.9,0,0,1,69.8,0Z"
                                                                   class="svg-fill-primary"
                                                                   fill-rule="evenodd"></path>
@@ -263,8 +235,7 @@
                 {% include "admin/nav_sidebar.html" %}
             {% endblock %}
         {% endif %}
-        <div class="flex flex-col w-0 flex-1 overflow-hidden">
-            {% block messages %}
+        {% block messages %}
                 {% if messages %}
                     <ul class="messagelist">{% for message in messages %}
                         <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
@@ -272,36 +243,35 @@
                 {% endif %}
             {% endblock messages %}
             <!-- Content -->
-            <div id="content" class="{% block coltype %}colM{% endblock %}">
+            <div id="content" class="w-full">
                 {% block pretitle %}{% endblock %}
-                <div class="py-6">
-                    <div class="pb-5 border-b border-light-200 dark:border-dark-200">
-                        {% block content_title %}
-                            {% if title %}
-                                <h1 class="text-lg leading-6 font-medium text-light-900 dark:text-dark-900">
-                                    {{ title }}
-                                </h1>
-                            {% endif %}
-                        {% endblock %}
-                        {% block content_subtitle %}
-                            {% if subtitle %}
-                                <p class="mt-2 max-w-4xl text-sm text-light-500 dark:text-dark-500">{{ subtitle }}</p>
-                                <h2></h2>
-                            {% endif %}
-                        {% endblock %}
-                    </div>
+                <div class="py-6 border-b border-light-200 dark:border-dark-200">
+                    {% block content_title %}
+                        {% if title %}
+                            <h1 class="spacing-x-regular text-lg leading-6 font-medium text-light-900 dark:text-dark-900">
+                                {{ title }}
+                            </h1>
+                        {% endif %}
+                    {% endblock %}
+                    {% block content_subtitle %}
+                        {% if subtitle %}
+                            <p class="mt-2 max-w-4xl text-sm text-light-500 dark:text-dark-500">{{ subtitle }}</p>
+                            <h2></h2>
+                        {% endif %}
+                    {% endblock %}
                 </div>
-                {% block content %}
-                    {% block object-tools %}{% endblock %}
-                    {{ content }}
-                {% endblock %}
-                {% block sidebar %}{% endblock %}
-                <br class="clear">
+
+                <div class="lg:flex lg:flex-shrink-0">
+                    {% block content %}
+                        {% block object-tools %}{% endblock %}
+                        {{ content }}
+                    {% endblock %}
+                    {% block sidebar %}{% endblock %}
+                </div>
             </div>
             <!-- END Content -->
             {% block footer %}
                 <div id="footer"></div>{% endblock %}
-        </div>
     </div>
 </div>
 <!-- END Container -->

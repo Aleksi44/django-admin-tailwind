@@ -3,16 +3,27 @@
 @tailwind utilities;
 
 @layer base {
-  h1 {
-    @apply text-2xl;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    @apply text-light-900 dark:text-dark-900;
   }
 
-  h2 {
-    @apply text-xl;
+  p {
+    @apply text-light-500 dark:text-dark-500;
   }
 
-  input[type=text], input[type=password], input[type=email], input[type=url],
-  input[type=number], input[type=tel], textarea, select, .vTextField {
+  input[type=text],
+  input[type=password],
+  input[type=email],
+  input[type=url],
+  input[type=number],
+  input[type=tel],
+  textarea,
+  select,
+  .vTextField {
     @apply bg-light-50 dark:bg-dark-50 text-light-900 dark:text-dark-900 appearance-none block px-2 py-2 border border-light-300 dark:border-dark-300 rounded-md shadow-sm dark:placeholder-dark-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm;
   }
 
@@ -32,5 +43,9 @@
 
   .w-full-input > input {
     @apply w-full;
+  }
+
+  .spacing-x-regular {
+    @apply px-2 sm:px-6 lg:px-8;
   }
 }
