@@ -1,16 +1,17 @@
 {% extends "admin/base_site.html" %}
 {% load i18n admin_urls static admin_list %}
 
-{% comment %}{% block extrastyle %}
+{% block extrastyle %}
     {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}">
+    {% comment %}<link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}">{% endcomment %}
     {% if cl.formset %}
         <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">
     {% endif %}
     {% if cl.formset or action_form %}
         <script src="{% url 'admin:jsi18n' %}"></script>
     {% endif %}
-    {{ media.css }}
+    {% comment %}{{ media.css }}{% endcomment %}
+    {% comment %}
     {% if not actions_on_top and not actions_on_bottom %}
         <style>
             #changelist table thead th:first-child {
@@ -18,7 +19,11 @@
             }
         </style>
     {% endif %}
-{% endblock %}{% endcomment %}
+{% endcomment %}
+{% endblock %}
+
+
+{% block content_container_class %}{% endblock %}
 
 {% block extrahead %}
     {{ block.super }}
@@ -50,7 +55,8 @@
                 </li>
                 <li class="flex">
                     <div class="flex items-center">
-                        <svg class="flex-shrink-0 w-6 h-full fill-current text-light-200 dark:text-dark-200" viewBox="0 0 24 44"
+                        <svg class="flex-shrink-0 w-6 h-full fill-current text-light-200 dark:text-dark-200"
+                             viewBox="0 0 24 44"
                              preserveAspectRatio="none" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
                              aria-hidden="true">
                             <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z"/>
@@ -94,8 +100,9 @@
             </p>
             {{ cl.formset.non_form_errors }}
         {% endif %}
-        <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
-            <div class="changelist-form-container">
+        <div class="module lg:flex lg:flex-shrink-0{% if cl.has_filters %} filtered{% endif %}"
+             id="changelist">
+            <div class="changelist-form-container flex-grow lg:pr-6">
                 {% block search %}{% search_form cl %}{% endblock %}
                 {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
 
@@ -116,9 +123,11 @@
             </div>
             {% block filters %}
                 {% if cl.has_filters %}
-                    <div id="changelist-filter">
+                    <div id="changelist-filter"
+                         style="min-width: 250px"
+                         class="lg:max-w-sm mt-6 py-6 spacing-x-regular shadow overflow-hidden rounded-md">
                         <h2>{% translate 'Filter' %}</h2>
-                        {% if cl.has_active_filters %}<h3 id="changelist-filter-clear">
+                        {% if cl.has_active_filters %}<h3 class="my-4" id="changelist-filter-clear">
                             <a href="{{ cl.clear_all_filters_qs }}">&#10006; {% translate "Clear all filters" %}</a>
                         </h3>{% endif %}
                         {% for spec in cl.filter_specs %}{% admin_list_filter cl spec %}{% endfor %}

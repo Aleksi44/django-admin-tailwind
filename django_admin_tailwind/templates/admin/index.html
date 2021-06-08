@@ -16,15 +16,15 @@
 {% block nav-sidebar %}{% endblock %}
 
 {% block content %}
-    <div id="content-main" class="flex-grow spacing-x-regular -my-2 -mx-2">
+    <div id="content-main" class="pt-6 flex-grow spacing-x-regular -my-2 -mx-2">
         {% include "admin/app_list.html" with app_list=app_list show_changelinks=True with_section=True %}
     </div>
 {% endblock %}
 
 {% block sidebar %}
 
-    <div class="bg-white shadow overflow-hidden sm:rounded-md">
-        <ul class="divide-y divide-light-200">
+    <div class="lg:max-w-sm pt-6 spacing-x-regular">
+        <ul class="shadow overflow-hidden rounded-md divide-y divide-light-200 dark:divide-dark-200">
 
             <li>
                 <div class="px-4 py-4 sm:px-6">
@@ -44,45 +44,59 @@
             {% else %}
                 {% for entry in admin_log %}
                     <li>
-                        {% if not entry.is_deletion or entry.get_admin_url %}
-                            <a href="{{ entry.get_admin_url }}" class="block hover:bg-light-50">{% endif %}
+                        {% if not entry.is_deletion and entry.get_admin_url %}
+                            <a href="{{ entry.get_admin_url }}"
+                               class="block hover:bg-light-50 dark:hover:bg-dark-50">{% endif %}
                         <div class="flex items-center px-4 py-4 sm:px-6">
                             <div class="min-w-0 flex-1 flex items-center">
-                                <div class="hidden md:block">
+                                <div>
                                     <div class="pr-2">
-
-                                        <p class="text-sm text-light-900">{{ entry.object_repr }}</p>
-
-
-                                        <p class="mt-2 flex items-center text-sm text-light-500">
+                                        {% if entry.object_repr %}
+                                            <p class="mb-2 text-sm text-light-900 dark:text-dark-900">{{ entry.object_repr }}</p>
+                                        {% endif %}
+                                        <p class="flex items-center text-sm text-light-500 dark:text-dark-500">
                                             {% if entry.is_addition %}
-                                                <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400"
-                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                                     fill="currentColor" aria-hidden="true">
-                                                    <path fill-rule="evenodd"
-                                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                          clip-rule="evenodd"/>
+                                                <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400 fill-current"
+                                                     width="100%"
+                                                     height="100%"
+                                                     preserveaspectratio="xMidYMid meet"
+                                                     viewbox="0 0 100 100"
+                                                     x="0"
+                                                     y="0"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M50,18a6.4,6.4,0,0,1,6.4,6.4V43.6H75.6a6.4,6.4,0,1,1,0,12.8H56.4V75.6a6.4,6.4,0,0,1-12.8,0V56.4H24.4a6.4,6.4,0,0,1,0-12.8H43.6V24.4A6.4,6.4,0,0,1,50,18Z"
+                                                          fill-rule="evenodd">
+                                                    </path>
+                                                </svg>
+                                            {% elif entry.is_change %}
+                                                <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-yellow-400 fill-current"
+                                                     width="100%"
+                                                     height="100%"
+                                                     preserveaspectratio="xMidYMid meet"
+                                                     viewbox="0 0 100 100"
+                                                     x="0"
+                                                     y="0"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M79.3,20.7a9.1,9.1,0,0,0-12.9,0l-3.6,3.6L75.7,37.2l3.6-3.6A9.1,9.1,0,0,0,79.3,20.7Z">
+                                                    </path>
+                                                    <polygon points="18 69.1 18 82 30.9 82 69.2 43.7 56.3 30.8 18 69.1">
+                                                    </polygon>
+                                                </svg>
+                                            {% elif entry.is_deletion %}
+                                                <svg class="flex-shrink-0 mr-1.5 h-4 w-4 text-red-400 fill-current"
+                                                     height="100%"
+                                                     width="100%"
+                                                     preserveaspectratio="xMidYMid meet"
+                                                     viewbox="0 0 100 100"
+                                                     x="0"
+                                                     y="0"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path class="svg-fill-primary"
+                                                          d="M14.4,14.4a6.3,6.3,0,0,1,8.8,0L50,41.2,76.8,14.4a6.2,6.2,0,0,1,8.8,8.8L58.8,50,85.6,76.8a6.2,6.2,0,0,1-8.8,8.8L50,58.8,23.2,85.6a6.2,6.2,0,0,1-8.8-8.8L41.2,50,14.4,23.2A6.3,6.3,0,0,1,14.4,14.4Z"
+                                                          fill-rule="evenodd">
+                                                    </path>
                                                 </svg>
                                             {% endif %}
-                                            {% if entry.is_change %}
-                                                <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400"
-                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                                     fill="currentColor" aria-hidden="true">
-                                                    <path fill-rule="evenodd"
-                                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                          clip-rule="evenodd"/>
-                                                </svg>
-                                            {% endif %}
-                                            {% if entry.is_deletion %}
-                                                <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400"
-                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                                     fill="currentColor" aria-hidden="true">
-                                                    <path fill-rule="evenodd"
-                                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                          clip-rule="evenodd"/>
-                                                </svg>
-                                            {% endif %}
-
                                             {% if entry.content_type %}
                                                 {% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}
                                             {% else %}
@@ -92,15 +106,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <svg class="h-5 w-5 text-light-400" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 20 20"
-                                     fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
+                            {% if not entry.is_deletion and entry.get_admin_url %}
+                                <div>
+                                    <svg class="h-5 w-5 text-light-400 dark:text-dark-400"
+                                         xmlns="http://www.w3.org/2000/svg"
+                                         viewBox="0 0 20 20"
+                                         fill="currentColor"
+                                         aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                              clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                            {% endif %}
                         </div>
                         {% if not entry.is_deletion or entry.get_admin_url %}</a>{% endif %}
                     </li>

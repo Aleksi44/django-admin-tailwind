@@ -144,7 +144,7 @@
                                                  x-transition:leave-start="opacity-100 scale-100"
                                                  x-transition:leave-end="opacity-0 scale-95"
                                                  x-cloak
-                                                 class="z-30 transition origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-light-0 dark:bg-dark-0 focus:outline-none"
+                                                 class="z-30 transition origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-light-0 dark:bg-dark-0 focus:outline-none"
                                                  role="menu"
                                                  aria-orientation="vertical"
                                                  aria-labelledby="user-menu-button"
@@ -152,7 +152,7 @@
                                                 {% block userlinks %}
                                                     {% if site_url %}
                                                         <a href="{{ site_url }}"
-                                                           class="block px-4 py-2 text-sm text-light-700 dark:text-dark-700"
+                                                           class="block hover:bg-light-50 dark:hover:bg-dark-50 px-4 py-2 text-sm text-light-700 dark:text-dark-700"
                                                            role="menuitem"
                                                            tabindex="-1"
                                                            id="user-menu-item-0">{% translate 'View site' %}</a>
@@ -161,7 +161,7 @@
                                                         {% url 'django-admindocs-docroot' as docsroot %}
                                                         {% if docsroot %}
                                                             <a href="{{ docsroot }}"
-                                                               class="block px-4 py-2 text-sm text-light-700 dark:text-dark-700"
+                                                               class="block hover:bg-light-50 dark:hover:bg-dark-50 px-4 py-2 text-sm text-light-700 dark:text-dark-700"
                                                                role="menuitem"
                                                                tabindex="-1"
                                                                id="user-menu-item-0">{% translate 'Documentation' %}</a>
@@ -169,13 +169,13 @@
                                                     {% endif %}
                                                     {% if user.has_usable_password %}
                                                         <a href="{% url 'admin:password_change' %}"
-                                                           class="block px-4 py-2 text-sm text-light-700 dark:text-dark-700"
+                                                           class="block hover:bg-light-50 dark:hover:bg-dark-50 px-4 py-2 text-sm text-light-700 dark:text-dark-700"
                                                            role="menuitem"
                                                            tabindex="-1"
                                                            id="user-menu-item-0">{% translate 'Change password' %}</a>
                                                     {% endif %}
                                                     <a href="{% url 'admin:logout' %}"
-                                                       class="block px-4 py-2 text-sm text-light-700 dark:text-dark-700"
+                                                       class="block hover:bg-light-50 dark:hover:bg-dark-50 px-4 py-2 text-sm text-light-700 dark:text-dark-700"
                                                        role="menuitem"
                                                        tabindex="-1" id="user-menu-item-0">{% translate 'Log out' %}</a>
                                                 {% endblock %}
@@ -229,7 +229,7 @@
         {% endblock %}
     {% endif %}
 
-    <div id="main" class="h-screen flex overflow-hidden">
+    <div id="main" class="h-screen flex">
         {% if not is_popup and is_nav_sidebar_enabled %}
             {% block nav-sidebar %}
                 {% include "admin/nav_sidebar.html" %}
@@ -237,31 +237,120 @@
         {% endif %}
         {% block messages %}
             {% if messages %}
-                <ul class="messagelist">{% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
-                {% endfor %}</ul>
+                <div class="fixed z-50 inset-0 flex items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end">
+                    <div x-data="{ show: true }" x-show="show"
+                         x-description="Notification panel, show/hide based on alert state."
+                         x-transition:enter="transform ease-out duration-300 transition"
+                         x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
+                         x-transition:enter-end="translate-y-0 opacity-100 sm:translate-x-0"
+                         x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100"
+                         x-transition:leave-end="opacity-0"
+                         class="max-w-sm w-full bg-light-0 dark:bg-dark-0 shadow-lg rounded-lg pointer-events-auto overflow-hidden ring-1 ring-primary-500">
+                        {% for message in messages %}
+                            <div class="message p-4">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0" data-tags="{{ message.tags }}">
+                                        {% if 'success' in message.tags %}
+                                            <svg class="h-6 w-6 text-green-400 fill-current"
+                                                 width="100%"
+                                                 height="100%"
+                                                 preserveaspectratio="xMidYMid meet"
+                                                 viewbox="0 0 100 100"
+                                                 x="0"
+                                                 y="0"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M85.7,25a5.3,5.3,0,0,1,0,7.5L43.1,75a5.3,5.3,0,0,1-7.5,0L14.3,53.8a5.4,5.4,0,0,1,0-7.6,5.4,5.4,0,0,1,7.5,0L39.4,63.8,78.2,25A5.3,5.3,0,0,1,85.7,25Z"
+                                                      fill-rule="evenodd">
+                                                </path>
+                                            </svg>
+                                        {% elif 'error' in message.tags %}
+                                            <svg class="h-6 w-6 text-red-400 fill-current"
+                                                 height="100%"
+                                                 width="100%"
+                                                 preserveaspectratio="xMidYMid meet"
+                                                 viewbox="0 0 100 100"
+                                                 x="0"
+                                                 y="0"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path class="svg-fill-primary"
+                                                      d="M14.4,14.4a6.3,6.3,0,0,1,8.8,0L50,41.2,76.8,14.4a6.2,6.2,0,0,1,8.8,8.8L58.8,50,85.6,76.8a6.2,6.2,0,0,1-8.8,8.8L50,58.8,23.2,85.6a6.2,6.2,0,0,1-8.8-8.8L41.2,50,14.4,23.2A6.3,6.3,0,0,1,14.4,14.4Z"
+                                                      fill-rule="evenodd">
+                                                </path>
+                                            </svg>
+                                        {% elif 'warning' in message.tags %}
+                                            <svg class="h-6 w-6 text-orange-400 fill-current"
+                                                 height="100%"
+                                                 width="100%"
+                                                 preserveaspectratio="xMidYMid meet"
+                                                 viewbox="0 0 100 100"
+                                                 x="0"
+                                                 y="0"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path class="svg-fill-primary"
+                                                      d="M42.6,24.8a8.5,8.5,0,0,1,14.8,0L81,66.9a8.5,8.5,0,0,1-7.4,12.6H26.4A8.5,8.5,0,0,1,19,66.9Zm11.6,42A4.2,4.2,0,1,1,50,62.5,4.2,4.2,0,0,1,54.2,66.8ZM50,32.9a4.2,4.2,0,0,0-4.2,4.2V49.8a4.2,4.2,0,1,0,8.4,0V37.1A4.2,4.2,0,0,0,50,32.9Z"
+                                                      fill-rule="evenodd">
+                                                </path>
+                                            </svg>
+                                        {% endif %}
+                                    </div>
+                                    <div class="ml-3 w-0 flex-1 pt-0.5">
+                                        <p class="text-sm font-medium text-light-900 dark:text-dark-900">
+                                            {{ message }}
+                                        </p>
+                                        {% if message.extra_tags %}
+                                            <p class="mt-1 text-sm text-light-500 dark:text-dark-500">
+                                                {{ message.extra_tags }}
+                                            </p>
+                                        {% endif %}
+                                    </div>
+                                    {% if forloop.counter0 == 0 %}
+                                        <div class="ml-4 flex-shrink-0 flex">
+                                            <button @click="show = false"
+                                                    class="svg-trigger bg-light-0 dark:bg-dark-0 rounded-md inline-flex text-light-400 hover:text-light-500 dark:text-dark-400 dark:hover:text-dark-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                                <span class="sr-only">Close</span>
+                                                <svg class="h-4 w-4 text-light-400 dark:text-dark-400 fill-current"
+                                                     height="100%"
+                                                     width="100%"
+                                                     preserveaspectratio="xMidYMid meet"
+                                                     viewbox="0 0 100 100"
+                                                     x="0"
+                                                     y="0"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path class="svg-fill-primary"
+                                                          d="M14.4,14.4a6.3,6.3,0,0,1,8.8,0L50,41.2,76.8,14.4a6.2,6.2,0,0,1,8.8,8.8L58.8,50,85.6,76.8a6.2,6.2,0,0,1-8.8,8.8L50,58.8,23.2,85.6a6.2,6.2,0,0,1-8.8-8.8L41.2,50,14.4,23.2A6.3,6.3,0,0,1,14.4,14.4Z"
+                                                          fill-rule="evenodd">
+                                                    </path>
+                                                </svg>
+                                                {% comment %}{% svg_inline 'heroicons-cross-small' width="100%" height="100%" klass='h-4 w-4 text-light-400 dark:text-dark-400 fill-current' %}{% endcomment %}
+                                            </button>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
             {% endif %}
         {% endblock messages %}
         <!-- Content -->
         <div id="content" class="flex-1 {% block contentclass %}{% endblock %}">
             {% block pretitle %}{% endblock %}
-            <div class="py-6">
-                {% block content_title %}
+            {% block content_title %}
+                <div class="pt-6">
                     {% if title %}
-                        <h1 class="spacing-x-regular text-lg leading-6 font-medium">
+                        <h1 class="spacing-x-regular">
                             {{ title }}
                         </h1>
                     {% endif %}
-                {% endblock %}
-                {% block content_subtitle %}
-                    {% if subtitle %}
-                        <p class="mt-2 max-w-4xl text-sm text-light-500 dark:text-dark-500">{{ subtitle }}</p>
-                        <h2></h2>
-                    {% endif %}
-                {% endblock %}
-            </div>
+                </div>
+            {% endblock %}
+            {% block content_subtitle %}
+                {% if subtitle %}
+                    <p class="spacing-x-regular">{{ subtitle }}</p>
+                {% endif %}
+            {% endblock %}
 
-            <div class="lg:flex lg:flex-shrink-0">
+            <div class="{% block content_container_class %}lg:flex lg:flex-shrink-0{% endblock %}">
                 {% block content %}
                     {% block object-tools %}{% endblock %}
                     {{ content }}

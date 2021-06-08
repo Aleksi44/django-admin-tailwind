@@ -9,28 +9,27 @@
             <div class="overflow-x-auto">
                 <div class="{% if with_section %}p-2{% endif %} align-middle inline-block min-w-full">
                     <div class="{% if with_section %}shadow sm:rounded-lg{% endif %} overflow-hidden border-b border-light-200 dark:border-dark-200">
-                        <table class="min-w-full divide-y divide-light-200 dark:divide-dark-200">
-                            <thead class="bg-light-100 dark:bg-dark-100">
+                        <table>
+                            <thead>
                             <tr>
-                                <th colspan="2"
-                                    class="p-4 py-3 text-left text-xs font-medium text-light-500 dark:text-dark-500 uppercase tracking-wider">
+                                <th colspan="2">
                                     <a href="{{ app.app_url }}" class="section"
                                        title="{% blocktranslate with name=app.name %}Models in the {{ name }} application{% endblocktranslate %}">{{ app.name }}</a>
                                 </th>
                             </tr>
                             </thead>
-                            <tbody class="divide-y divide-light-200 dark:divide-dark-200">
+                            <tbody>
                             {% for model in app.models %}
 
-                                <tr class="flex items-center {% if forloop.counter|divisibleby:2 %}bg-light-50 dark:bg-dark-50{% endif %}">
+                                <tr class="flex items-center">
                                 {% if model.admin_url %}
-                                    <td class="flex-grow p-4 text-sm text-light-500 dark:text-dark-500">
+                                    <td class="flex-grow">
                                         <a class="break-all" href="{{ model.admin_url }}"
                                                 {% if model.admin_url in request.path %}
                                            aria-current="page"{% endif %}>{{ model.name }}</a>
                                     </td>
                                 {% else %}
-                                    <td class="break-all flex-grow p-4 text-sm text-light-500 dark:text-dark-500">
+                                    <td class="break-all flex-grow">
                                         {{ model.name }}
                                     </td>
                                 {% endif %}

@@ -12,7 +12,9 @@ module.exports = {
         colors: {
             white: colors.white,
             red: colors.red,
+            yellow: colors.yellow,
             green: colors.green,
+            orange: colors.orange,
             light: {
                 0: 'var(--color-light-0)',
                 50: 'var(--color-light-50)',

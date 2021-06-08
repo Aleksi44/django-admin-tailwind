@@ -15,22 +15,24 @@
 
 {% block nav-sidebar %}{% endblock %}
 
+{% block header %}{% endblock %}
+
 {% block content_title %}{% endblock %}
+
+{% block contentclass %}{% endblock %}
 
 {% block breadcrumbs %}{% endblock %}
 
 {% block content %}
 
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
-        <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-             alt="Workflow">
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-light-900 dark:text-dark-900">
-            {% translate "Sign in to your account" %}
-        </h2>
-    </div>
+    <div class="bg-light-0 dark:bg-dark-0 flex-none mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="py-8 px-4 shadow sm:rounded-lg sm:px-10">
 
-    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-light-0 dark:bg-dark-0 py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                 alt="Workflow">
+            <h2 class="my-6 text-center text-3xl font-extrabold text-light-900 dark:text-dark-900">
+                {% translate "Sign in to your account" %}
+            </h2>
 
             {% if form.errors and not form.non_field_errors %}
                 <p class="text-center text-red-900">
@@ -74,7 +76,9 @@
                     </div>
                 {% endif %}
                 <div>
-                    <input class="w-full btn-primary-500" type="submit" value="{% translate 'Log in' %}">
+                    <input class="w-full flex justify-center py-2 px-4 rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                           type="submit"
+                           value="{% translate 'Log in' %}">
                 </div>
             </form>
         </div>
