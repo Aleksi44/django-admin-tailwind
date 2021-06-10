@@ -337,17 +337,17 @@
             {% block pretitle %}{% endblock %}
             {% block content_title %}
                 <div class="pt-6">
-                    {% if title %}
-                        <h1 class="spacing-x-regular">
-                            {{ title }}
-                        </h1>
-                    {% endif %}
+                    <div class="tracking-tight pl-2 sm:pl-6 lg:pl-8">
+                        {% if title %}
+                            <h1 class="inline">{{ title }}</h1>
+                        {% endif %}
+                        {% block content_subtitle %}
+                            {% if subtitle %}
+                                <p class="inline">{{ subtitle }}</p>
+                            {% endif %}
+                        {% endblock %}
+                    </div>
                 </div>
-            {% endblock %}
-            {% block content_subtitle %}
-                {% if subtitle %}
-                    <p class="spacing-x-regular">{{ subtitle }}</p>
-                {% endif %}
             {% endblock %}
 
             <div class="{% block content_container_class %}lg:flex lg:flex-shrink-0{% endblock %}">

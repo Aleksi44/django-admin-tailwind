@@ -36,7 +36,7 @@
   textarea,
   select,
   .vTextField {
-    @apply bg-light-50 dark:bg-dark-50 text-light-900 dark:text-dark-900 appearance-none block px-2 py-2 border border-light-300 dark:border-dark-300 rounded-md shadow-sm dark:placeholder-dark-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm;
+    @apply text-light-900 dark:text-dark-900 mt-1 block w-full rounded-md bg-light-100 dark:bg-dark-100 focus:border-light-500 dark:focus:border-dark-500 focus:bg-light-0 dark:focus:bg-dark-0 focus:ring-0;
   }
 
   input[type='submit'] {
@@ -80,6 +80,7 @@
 
 @layer components {
 
+  /* Layouts */
   .w-full-input > input {
     @apply w-full;
   }
@@ -87,7 +88,6 @@
   .spacing-x-regular {
     @apply px-2 sm:px-6 lg:px-8;
   }
-
 
   #content-main {
     @apply px-2 sm:px-6 lg:px-8;
@@ -103,7 +103,13 @@
   .addlink,
   .historylink,
   .search-button,
-  .button {
+  .button,
+  .deletelink,
+  .closelink,
+  .continueinput,
+  .addanotherinput,
+  .saveasnewinput,
+  .saveinput {
     @apply inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
   }
 
@@ -139,5 +145,9 @@
   .message a,
   #changelist-search a {
     @apply text-primary-500;
+  }
+
+  fieldset {
+    @apply mt-6 grid grid-cols-1 gap-6 max-w-md;
   }
 }

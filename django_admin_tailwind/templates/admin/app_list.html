@@ -38,7 +38,7 @@
                                 <td class="p-4 flex-none">
                                     {% if model.add_url %}
                                         <a href="{{ model.add_url }}"
-                                           class="inline-flex items-center shadow-sm px-2.5 py-0.5 border text-sm leading-5 font-medium rounded-full border-light-300 text-light-700 hover:bg-light-50 dark:border-dark-300 dark:text-dark-700 bg-light-0 dark:bg-dark-0 hover:dark:bg-dark-50">
+                                           class="inline-flex items-center shadow-sm px-2.5 py-0.5 border text-sm leading-5 font-medium rounded-full border-light-300 text-light-700 hover:bg-light-50 dark:border-dark-300 dark:text-dark-700 bg-light-0 dark:bg-dark-0 dark:hover:bg-dark-200">
                                             {% translate 'Add' %}
                                         </a>
                                     {% endif %}
@@ -46,12 +46,12 @@
                                     {% if model.admin_url and show_changelinks %}
                                         {% if model.view_only %}
                                             <a href="{{ model.admin_url }}"
-                                               class="inline-flex items-center shadow-sm px-2.5 py-0.5 border text-sm leading-5 font-medium rounded-full border-light-300 text-light-700 hover:bg-light-50 dark:border-dark-300 dark:text-dark-700 bg-light-0 dark:bg-dark-0 hover:dark:bg-dark-50">
+                                               class="inline-flex items-center shadow-sm px-2.5 py-0.5 border text-sm leading-5 font-medium rounded-full border-light-300 text-light-700 hover:bg-light-50 dark:border-dark-300 dark:text-dark-700 bg-light-0 dark:bg-dark-0 dark:hover:bg-dark-200">
                                                 {% translate 'View' %}
                                             </a>
                                         {% else %}
                                             <a href="{{ model.admin_url }}"
-                                               class="inline-flex items-center shadow-sm px-2.5 py-0.5 border text-sm leading-5 font-medium rounded-full border-light-300 text-light-700 hover:bg-light-50 dark:border-dark-300 dark:text-dark-700 bg-light-0 dark:bg-dark-0 hover:dark:bg-dark-50">
+                                               class="inline-flex items-center shadow-sm px-2.5 py-0.5 border text-sm leading-5 font-medium rounded-full border-light-300 text-light-700 hover:bg-light-50 dark:border-dark-300 dark:text-dark-700 bg-light-0 dark:bg-dark-0 dark:hover:bg-dark-200">
                                                 {% translate 'Change' %}
                                             </a>
                                         {% endif %}
