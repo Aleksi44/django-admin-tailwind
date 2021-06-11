@@ -14,7 +14,7 @@ module.exports = ({mode = 'development'} = {}) => {
             proxy: '127.0.0.1:4243',
             port: 3009,
             files: [
-                'static/django_admin_tailwind/src/scss/**/*.scss',
+                'django_admin_tailwind/static/django_admin_tailwind/src/scss/**/*.scss',
             ],
             reloadDelay: 0,
             notify: false,
@@ -24,11 +24,11 @@ module.exports = ({mode = 'development'} = {}) => {
 
     return {
         entry: {
-            base: path.resolve(__dirname, 'static/django_admin_tailwind/src/scss/base.scss'),
+            base: path.resolve(__dirname, 'django_admin_tailwind/static/django_admin_tailwind/src/scss/base.scss'),
         },
         output: {
-            filename: `static/django_admin_tailwind/dist/js/[name]-${version}.js`,
-            chunkFilename: `static/django_admin_tailwind/dist/js/[name]-${version}.js`,
+            filename: `django_admin_tailwind/static/django_admin_tailwind/dist/js/[name]-${version}.js`,
+            chunkFilename: `django_admin_tailwind/static/django_admin_tailwind/dist/js/[name]-${version}.js`,
             path: path.resolve(__dirname, '.'),
             publicPath: '/',
         },
@@ -40,7 +40,7 @@ module.exports = ({mode = 'development'} = {}) => {
                         {
                             loader: 'file-loader',
                             options: {
-                                name: `static/django_admin_tailwind/dist/css/[name]-${version}.css`,
+                                name: `django_admin_tailwind/static/django_admin_tailwind/dist/css/[name]-${version}.css`,
                             },
                         },
                         {
