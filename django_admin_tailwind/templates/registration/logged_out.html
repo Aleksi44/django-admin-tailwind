@@ -3,7 +3,12 @@
 
 {% block nav-sidebar %}{% endblock %}
 
+{% block content_container_class %}{% endblock %}
+
 {% block content %}
     <p class="spacing-x-regular">{% translate "Thanks for spending some quality time with the Web site today." %}</p>
-    <p class="spacing-x-regular"><a href="{% url 'admin:index' %}">{% translate 'Log in again' %}</a></p>
+    <p class="spacing-x-regular">
+        <a href="{% url 'admin:index' %}"
+           class="mt-6 button text-white bg-primary-600 hover:bg-primary-700 focus:ring-primary-500">{% translate 'Log in again' %}</a>
+    </p>
 {% endblock %}

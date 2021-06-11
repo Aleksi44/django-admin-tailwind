@@ -102,15 +102,18 @@
             {% for deletable_object in deletable_objects %}
                 <ul>{{ deletable_object|unordered_list }}</ul>
             {% endfor %}
-            <form method="post">{% csrf_token %}
+            <form class="mt-6" method="post">{% csrf_token %}
                 <div>
                     {% for obj in queryset %}
                         <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk|unlocalize }}">
                     {% endfor %}
                     <input type="hidden" name="action" value="delete_selected">
                     <input type="hidden" name="post" value="yes">
-                    <input type="submit" value="{% translate 'Yes, I’m sure' %}">
-                    <a href="#" class="button cancel-link">{% translate "No, take me back" %}</a>
+                    <input type="submit"
+                           value="{% translate 'Yes, I’m sure' %}"
+                           class="button mr-2 text-white bg-primary-600 hover:bg-primary-700 focus:ring-primary-500">
+                    <a href="#"
+                       class="button cancel-link text-light-900 dark:text-dark-900 bg-light-100 dark:bg-dark-100 hover:bg-light-200 dark:hover:bg-dark-200 focus:ring-light-50 dark:focus:ring-dark-50">{% translate "No, take me back" %}</a>
                 </div>
             </form>
         {% endif %}

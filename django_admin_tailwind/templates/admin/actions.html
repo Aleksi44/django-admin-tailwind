@@ -5,11 +5,13 @@
     {% for field in action_form %}{% if field.label %}<label>{{ field.label }} {% endif %}{{ field }}{% if field.label %}</label>{% endif %}{% endfor %}
     {% endblock %}
     {% block actions-submit %}
-    <button type="submit" class="button" title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">{% translate "Go" %}</button>
+    <button type="submit"
+            class="ml-2 button text-white bg-primary-600 hover:bg-primary-700 focus:ring-primary-500"
+            title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">{% translate "Go" %}</button>
     {% endblock %}
     {% block actions-counter %}
     {% if actions_selection_counter %}
-        <span class="action-counter" data-actions-icnt="{{ cl.result_list|length }}">{{ selection_note }}</span>
+        <span class="action-counter mx-2 text-sm text-light-600 dark:text-dark-600" data-actions-icnt="{{ cl.result_list|length }}">{{ selection_note }}</span>
         {% if cl.result_count != cl.result_list|length %}
         <span class="all hidden">{{ selection_note_all }}</span>
         <span class="question hidden">

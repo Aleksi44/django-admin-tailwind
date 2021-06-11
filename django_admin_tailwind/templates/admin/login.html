@@ -1,10 +1,6 @@
 {% extends "admin/base_site.html" %}
 {% load i18n static %}
 
-{% block extrastyle %}{{ block.super }}
-    {% comment %}<link rel="stylesheet" type="text/css" href="{% static "admin/css/login.css" %}">{% endcomment %}
-    {{ form.media }}
-{% endblock %}
 
 {% block bodyclass %}{{ block.super }} min-h-screen bg-light-50 dark:bg-dark-50 flex flex-col justify-center py-12
     sm:px-6 lg:px-8{% endblock %}
@@ -28,10 +24,18 @@
     <div class="bg-light-0 dark:bg-dark-0 flex-none mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="py-8 px-4 shadow sm:rounded-lg sm:px-10">
 
-            <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                 alt="Workflow">
+            {% block branding_login %}
+                <picture>
+                    <source srcset="https://static.snoweb.fr/media/icon-snoweb-dark-no-aspect.svg"
+                            media="(prefers-color-scheme: dark)">
+                    <img class="mx-auto h-12 w-auto"
+                         src="https://static.snoweb.fr/media/icon-snoweb-light-no-aspect.svg"
+                         alt="Snoweb Logo">
+                </picture>
+            {% endblock %}
+
             <h2 class="my-6 text-center text-3xl font-extrabold text-light-900 dark:text-dark-900">
-                {% translate "Sign in to your account" %}
+                {% translate "Log in" %}
             </h2>
 
             {% if form.errors and not form.non_field_errors %}

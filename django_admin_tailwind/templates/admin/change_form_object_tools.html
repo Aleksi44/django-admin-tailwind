@@ -2,7 +2,8 @@
 {% block object-tools-items %}
 <li>
     {% url opts|admin_urlname:'history' original.pk|admin_urlquote as history_url %}
-    <a href="{% add_preserved_filters history_url %}" class="historylink">{% translate "History" %}</a>
+    <a href="{% add_preserved_filters history_url %}"
+       class="historylink text-light-900 dark:text-dark-900 bg-light-100 dark:bg-dark-100 hover:bg-light-200 dark:hover:bg-dark-200 focus:ring-light-50 dark:focus:ring-dark-50">{% translate "History" %}</a>
 </li>
 {% if has_absolute_url %}<li><a href="{{ absolute_url }}" class="viewsitelink">{% translate "View on site" %}</a></li>{% endif %}
 {% endblock %}

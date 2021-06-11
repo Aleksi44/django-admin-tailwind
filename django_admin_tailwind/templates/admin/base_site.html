@@ -4,11 +4,14 @@
     {{ site_title|default:_('Django site admin') }}{% endblock %}
 
 {% block branding %}
-    {% comment %}<h1 class="text-4xl tracking-tight font-extrabold text-light-900 dark:text-dark-900 sm:text-5xl md:text-6xl" id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>{% endcomment %}
     <a href="{% url 'admin:index' %}">
-        <img class="h-8 w-auto"
-             src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-             alt="Workflow">
+        <picture>
+            <source srcset="https://static.snoweb.fr/media/icon-snoweb-dark-no-aspect.svg"
+                    media="(prefers-color-scheme: dark)">
+            <img class="h-8 w-auto"
+                 src="https://static.snoweb.fr/media/icon-snoweb-light-no-aspect.svg"
+                 alt="Snoweb Logo">
+        </picture>
     </a>
 {% endblock %}
 
