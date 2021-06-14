@@ -35,6 +35,7 @@
   input[type=tel],
   textarea,
   select,
+  .vIntegerField,
   .vTextField {
     @apply text-light-900 dark:text-dark-900 mt-1 block w-full rounded-md bg-light-100 dark:bg-dark-100 focus:border-light-500 dark:focus:border-dark-500 focus:bg-light-0 dark:focus:bg-dark-0 focus:ring-0 !important;
   }

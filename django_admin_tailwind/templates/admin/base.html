@@ -72,6 +72,11 @@
                   href="{% static 'django_admin_tailwind/dist/css/base-'|add:VERSION|add:'.css' %}">
         {% endwith %}
     {% endblock %}
+    {% comment %}
+        Tailwind purge class:
+            - errorlist
+            - vIntegerField
+    {% endcomment %}
     {% if not is_popup and is_nav_sidebar_enabled %}
         {% comment %}<link rel="stylesheet" type="text/css" href="{% static "admin/css/nav_sidebar.css" %}">{% endcomment %}
         <script src="{% static 'admin/js/nav_sidebar.js' %}" defer></script>

@@ -9,6 +9,6 @@
 {% if show_save_as_new %}<input type="submit" value="{% translate 'Save as new' %}" class="saveasnewinput order-2 mr-2 text-white bg-primary-400 hover:bg-primary-500 focus:ring-primary-300" name="_saveasnew">{% endif %}
 {% if show_save_and_add_another %}<input type="submit" class="addanotherinput order-3 mr-2 text-white bg-primary-400 hover:bg-primary-500 focus:ring-primary-300" value="{% translate 'Save and add another' %}" name="_addanother">{% endif %}
 {% if show_save_and_continue %}<input type="submit" class="order-4 continueinput mr-2 text-white bg-primary-400 hover:bg-primary-500 focus:ring-primary-300" value="{% if can_change %}{% translate 'Save and continue editing' %}{% else %}{% translate 'Save and view' %}{% endif %}" name="_continue">{% endif %}
-{% if show_close %}<a href="{% url opts|admin_urlname:'changelist' %}" class="order-5 mr-2 text-white bg-primary-400 hover:bg-primary-500 focus:ring-primary-300" class="closelink">{% translate 'Close' %}</a>{% endif %}
+{% if show_close %}<a href="{% url opts|admin_urlname:'changelist' %}" class="order-5 button mr-2 text-white bg-primary-400 hover:bg-primary-500 focus:ring-primary-300" class="closelink">{% translate 'Close' %}</a>{% endif %}
 {% endblock %}
 </div>
