@@ -24,12 +24,12 @@
                                 <tr class="flex items-center">
                                 {% if model.admin_url %}
                                     <td class="flex-grow">
-                                        <a class="break-all" href="{{ model.admin_url }}"
+                                        <a href="{{ model.admin_url }}"
                                                 {% if model.admin_url in request.path %}
                                            aria-current="page"{% endif %}>{{ model.name }}</a>
                                     </td>
                                 {% else %}
-                                    <td class="break-all flex-grow">
+                                    <td class="flex-grow">
                                         {{ model.name }}
                                     </td>
                                 {% endif %}
