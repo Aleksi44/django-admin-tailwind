@@ -16,7 +16,7 @@ class DataAdmin(admin.ModelAdmin):
     list_filter = (
         ('tag', admin.RelatedOnlyFieldListFilter),
     )
-    search_fields = ('long_long_long_long_long_char_field',)
+    search_fields = ('number_field',)
 
 
 admin.site.register(Session)

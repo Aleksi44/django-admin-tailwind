@@ -15,7 +15,7 @@ class Command(management.base.BaseCommand):
             _quantity=200,
             long_long_long_long_long_char_field=lorem_ipsum.words(100),
             text_field=lorem_ipsum.paragraphs(3),
-            number_field=42,
+            number_field=200,
             url_field='http://django.tailwind',
             tag=tag_1,
         )
@@ -24,7 +24,7 @@ class Command(management.base.BaseCommand):
             _quantity=300,
             long_long_long_long_long_char_field=lorem_ipsum.words(100),
             text_field=lorem_ipsum.paragraphs(3),
-            number_field=42,
+            number_field=300,
             url_field='http://django.tailwind',
             tag=tag_2
         )

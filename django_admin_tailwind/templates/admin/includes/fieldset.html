@@ -20,7 +20,7 @@
                         {% endif %}
                     {% endif %}
                     {% if field.field.help_text %}
-                        <div class="help text-sm text-light-600 dark:text-dark-600">{{ field.field.help_text|safe }}</div>
+                        <div class="help text-sm text-light-600 dark:text-dark-600">{{ field.field.help_text|safe|capfirst }}</div>
                     {% endif %}
                 </div>
             {% endfor %}
