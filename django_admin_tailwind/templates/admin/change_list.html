@@ -103,13 +103,13 @@
 
                         {% block result_list %}
                             <div class="flex">
-                                {% comment %}{% block object-tools %}
+                                {% block object-tools %}
                                     <ul class="object-tools">
                                         {% block object-tools-items %}
                                             {% change_list_object_tools %}
                                         {% endblock %}
                                     </ul>
-                                {% endblock %}{% endcomment %}
+                                {% endblock %}
                                 {% block search %}{% search_form cl %}{% endblock %}
                                 {% if action_form and actions_on_top and cl.show_admin_actions %}
                                     {% admin_actions %}{% endif %}
