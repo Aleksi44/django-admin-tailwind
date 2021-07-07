@@ -93,7 +93,6 @@
             <div class="module lg:flex-grow"
                  id="changelist">
                 <div class="changelist-form-container lg:pr-6">
-                    {% block search %}{% search_form cl %}{% endblock %}
                     {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
 
                     <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %}
@@ -104,13 +103,14 @@
 
                         {% block result_list %}
                             <div class="flex">
-                                {% block object-tools %}
+                                {% comment %}{% block object-tools %}
                                     <ul class="object-tools">
                                         {% block object-tools-items %}
                                             {% change_list_object_tools %}
                                         {% endblock %}
                                     </ul>
-                                {% endblock %}
+                                {% endblock %}{% endcomment %}
+                                {% block search %}{% search_form cl %}{% endblock %}
                                 {% if action_form and actions_on_top and cl.show_admin_actions %}
                                     {% admin_actions %}{% endif %}
                             </div>
