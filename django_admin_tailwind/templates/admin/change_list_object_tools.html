@@ -5,7 +5,7 @@
   <li>
     {% url cl.opts|admin_urlname:'add' as add_url %}
     <a href="{% add_preserved_filters add_url is_popup to_field %}"
-       class="addlink text-light-900 dark:text-dark-900 bg-light-100 dark:bg-dark-100 hover:bg-light-200 dark:hover:bg-dark-200 focus:ring-light-50 dark:focus:ring-dark-50">
+       class="addlink text-white bg-primary-600 hover:bg-primary-700 focus:ring-primary-500">
       {% blocktranslate with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktranslate %}
     </a>
   </li>

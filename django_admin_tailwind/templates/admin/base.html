@@ -68,8 +68,10 @@
             }
         </style>
         {% with VERSION='VERSION'|get_context %}
-            <link rel="stylesheet" type="text/css"
-                  href="{% static 'django_admin_tailwind/dist/css/base-'|add:VERSION|add:'.css' %}">
+            {% with href="/django_admin_tailwind/"|add:VERSION|add:'/css/base.css' %}
+                <link rel="stylesheet" type="text/css"
+                      href="{% if debug %}{{ href }}{% else %}https://static.snoweb.fr{{ href }}{% endif %}">
+            {% endwith %}
         {% endwith %}
     {% endblock %}
     {% comment %}
@@ -171,16 +173,14 @@
                                                             <a href="{{ docsroot }}"
                                                                class="block hover:bg-light-50 dark:hover:bg-dark-50 px-4 py-2 text-sm text-light-700 dark:text-dark-700"
                                                                role="menuitem"
-                                                               tabindex="-1"
-                                                               id="user-menu-item-0">{% translate 'Documentation' %}</a>
+                                                               tabindex="-1">{% translate 'Documentation' %}</a>
                                                         {% endif %}
                                                     {% endif %}
                                                     {% if user.has_usable_password %}
                                                         <a href="{% url 'admin:password_change' %}"
                                                            class="block hover:bg-light-50 dark:hover:bg-dark-50 px-4 py-2 text-sm text-light-700 dark:text-dark-700"
                                                            role="menuitem"
-                                                           tabindex="-1"
-                                                           id="user-menu-item-0">{% translate 'Change password' %}</a>
+                                                           tabindex="-1">{% translate 'Change password' %}</a>
                                                     {% endif %}
                                                     <a href="{% url 'admin:logout' %}"
                                                        class="block hover:bg-light-50 dark:hover:bg-dark-50 px-4 py-2 text-sm text-light-700 dark:text-dark-700"
@@ -237,7 +237,7 @@
         {% endblock %}
     {% endif %}
 
-    <div id="main" class="h-screen flex">
+    <div id="main" class="flex">
         {% if not is_popup and is_nav_sidebar_enabled %}
             {% block nav-sidebar %}
                 {% include "admin/nav_sidebar.html" %}
@@ -341,7 +341,7 @@
             {% endif %}
         {% endblock messages %}
         <!-- Content -->
-        <div id="content" class="flex-1 {% block contentclass %}{% endblock %}">
+        <div id="content" class="flex-1 pb-14 {% block contentclass %}{% endblock %}">
             {% block pretitle %}{% endblock %}
             {% block content_title %}
                 <div class="pt-6">

@@ -38,7 +38,13 @@ Add django-admin-tailwind to django apps installed :
         'django.contrib.admin',
     ]
 
-Collect static files (if you have external storage) :
+
+Dev
+###
+
 ::
 
-    python manage.py collectstatic
+    python manage.py migrate
+    python manage.py init
+
+Log in with django:tailwind

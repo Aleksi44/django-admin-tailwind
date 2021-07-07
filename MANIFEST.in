@@ -2,4 +2,3 @@ include *.rst
 include AUTHORS
 include LICENSE
 recursive-include django_admin_tailwind/templates *.html
-recursive-include django_admin_tailwind/static *.css

@@ -1,0 +1,20 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$zRHUBLtSaWlXexbYSkJWIy$JaFegiS4PeiCI2602upLL9+mkfgf8NFshdlrn2hmbOM=",
+      "last_login": "2021-07-03T15:41:08.110Z",
+      "is_superuser": true,
+      "username": "django",
+      "first_name": "Django",
+      "last_name": "Tailwind",
+      "email": "django@tailwind.test",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2021-07-03T15:40:58.562Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]

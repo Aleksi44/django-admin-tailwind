@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        @apply text-light-900 dark:text-dark-900;
+    }
+
+    h1 {
+        @apply text-lg font-extrabold;
+    }
+
+    h2 {
+        @apply text-base font-medium;
+    }
+
+    h3 {
+        @apply text-sm font-light;
+    }
+
+    p {
+        @apply text-light-500 dark:text-dark-500;
+    }
+
+    input[type=text],
+    input[type=password],
+    input[type=email],
+    input[type=url],
+    input[type=number],
+    input[type=tel],
+    textarea,
+    select,
+    .vIntegerField,
+    .vTextField {
+        @apply text-light-900 dark:text-dark-900 mt-1 block w-full rounded-md bg-light-100 dark:bg-dark-100 focus:border-light-500 dark:focus:border-dark-500 focus:bg-light-0 dark:focus:bg-dark-0 focus:ring-0 !important;
+    }
+
+    input[type='submit'] {
+        @apply cursor-pointer;
+    }
+
+    input[type='checkbox'] {
+        @apply bg-light-0 dark:bg-dark-0;
+    }
+
+    label {
+        @apply block text-sm font-medium text-light-700 dark:text-dark-700;
+    }
+
+    table {
+        @apply min-w-full divide-y divide-light-200 dark:divide-dark-200;
+    }
+
+    thead {
+        @apply bg-light-100 dark:bg-dark-100;
+    }
+
+    tbody {
+        @apply divide-y divide-light-200 dark:divide-dark-200;
+    }
+
+    th {
+        @apply px-6 py-3 text-left text-xs font-medium text-light-500 dark:text-dark-500 uppercase tracking-wider;
+    }
+
+    td {
+        @apply px-6 py-4 text-sm text-light-900 dark:text-dark-900;
+    }
+
+    tbody > tr:nth-child(even) {
+        @apply bg-light-50 dark:bg-dark-50;
+    }
+
+    tbody > tr:nth-child(odd) {
+        @apply bg-light-0 dark:bg-dark-0;
+    }
+
+}
+
+@layer components {
+
+    /* Layouts */
+    .w-full-input > input {
+        @apply w-full;
+    }
+
+    .spacing-x-regular {
+        @apply px-2 sm:px-6 lg:px-8;
+    }
+
+    #content-main {
+        @apply px-2 sm:px-6 lg:px-8;
+    }
+
+    .object-tools,
+    .actions,
+    .results,
+    .paginator {
+        @apply mt-6;
+    }
+
+    .addlink,
+    .historylink,
+    .search-button,
+    .button,
+    .deletelink,
+    .closelink,
+    .continueinput,
+    .addanotherinput,
+    .saveasnewinput,
+    .saveinput {
+        @apply inline-flex items-center mt-1 px-4 py-3 text-sm font-medium rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2;
+    }
+
+    select[name=action] {
+        @apply mx-2;
+    }
+
+    #changelist-filter ul {
+        @apply my-3;
+    }
+
+    #changelist-filter h3 {
+        @apply my-3;
+    }
+
+    #changelist-filter li {
+        @apply text-primary-700;
+    }
+
+    #changelist-filter li.selected {
+        @apply text-primary-400;
+    }
+
+    .selector-chooseall,
+    .selector-add,
+    .selector-remove,
+    .selector-clearall,
+    th a,
+    .message a,
+    #changelist-search a {
+        @apply text-primary-500;
+    }
+
+    fieldset {
+        @apply mt-6 grid grid-cols-1 gap-6 max-w-md;
+    }
+
+    div[disabled] {
+        @apply text-light-900 dark:text-dark-900;
+    }
+
+    .errorlist > li {
+        @apply text-red-500;
+    }
+
+    .paginator > a {
+        @apply relative inline-flex items-center px-4 py-2 border border-light-300 dark:border-dark-300 text-sm font-medium text-light-700 dark:text-dark-700 hover:bg-light-50 dark:hover:bg-dark-50;
+    }
+
+    .paginator > .this-page {
+        @apply bg-primary-600 text-white relative inline-flex items-center px-4 py-2 border border-light-300 dark:border-dark-300 text-sm font-medium hover:bg-primary-700;
+    }
+}
