@@ -10,6 +10,6 @@ patch:
 	rm -rf dist/*
 	rm -rf build/*
 	yarn build
-	python manage.py collectstatic
+	python manage.py collectstatic --noinput
 	python setup.py sdist bdist_wheel
 	python -m twine upload dist/*

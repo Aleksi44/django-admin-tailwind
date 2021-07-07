@@ -54,6 +54,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'app.urls'
 
+
+def constants_processor(request):
+    return dict(DAT_DEBUG=True)
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -65,6 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'app.settings.constants_processor'
             ],
         },
     },

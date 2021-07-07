@@ -70,7 +70,7 @@
         {% with VERSION='VERSION'|get_context %}
             {% with href="/django_admin_tailwind/"|add:VERSION|add:'/css/base.css' %}
                 <link rel="stylesheet" type="text/css"
-                      href="{% if debug %}{{ href }}{% else %}https://static.snoweb.fr{{ href }}{% endif %}">
+                      href="{% if DAT_DEBUG %}{{ href }}{% else %}https://static.snoweb.fr{{ href }}{% endif %}">
             {% endwith %}
         {% endwith %}
     {% endblock %}
