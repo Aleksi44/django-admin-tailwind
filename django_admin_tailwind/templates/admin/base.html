@@ -6,6 +6,7 @@
     {% block stylesheet %}
         <style>
             :root {
+            {% block colors %}
                 --color-light-0: #FFF;
                 --color-light-50: #F8FAFF;
                 --color-light-100: #F0F4FF;
@@ -59,6 +60,7 @@
                 --svg-theme-dark-primary: currentColor;
                 --svg-theme-dark-secondary: #FFF;
                 --svg-theme-dark-tertiary: #FFF;
+            {% endblock %}
             }
 
             /* Alpine.js */
