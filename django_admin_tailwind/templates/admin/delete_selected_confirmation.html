@@ -74,7 +74,7 @@
 {% endblock %}
 
 {% block content %}
-    <div id="content-main">
+    <div id="content-main" class="px-2 sm:px-6 lg:px-8">
         {% if perms_lacking %}
             <p>{% blocktranslate %}Deleting the selected {{ objects_name }} would result in deleting related objects,
                 but
