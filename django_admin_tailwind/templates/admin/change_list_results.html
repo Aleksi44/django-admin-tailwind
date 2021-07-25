@@ -7,7 +7,7 @@
 {% if results %}
     <div class="results">
         <table id="result_list">
-            <thead>
+            <thead {% comment %}class="sticky top-0 table-caption"{% endcomment %}>
             <tr>
                 {% for header in result_headers %}
                     <th scope="col"{{ header.class_attrib }}>

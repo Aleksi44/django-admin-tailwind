@@ -1,8 +1,15 @@
 {% load i18n %}
-<h3>{% blocktranslate with filter_title=title %} By {{ filter_title }} {% endblocktranslate %}</h3>
+<span class="text-xs font-semibold text-light-500 dark:text-dark-500 uppercase tracking-wider">{% blocktranslate with filter_title=title %}
+    By {{ filter_title }} {% endblocktranslate %}</span>
 <ul>
-{% for choice in choices %}
-    <li{% if choice.selected %} class="selected"{% endif %}>
-    <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}">{{ choice.display }}</a></li>
-{% endfor %}
+    {% for choice in choices %}
+        <li>
+            <a href="{{ choice.query_string|iriencode }}"
+               title="{{ choice.display }}"
+               class="{% if choice.selected %}text-secondary-500{% else %}text-light-700 dark:text-dark-700 hover:text-light-900 dark:hover:text-dark-900{% endif %} hover:bg-light-50 dark:hover:bg-dark-50 group flex items-center py-2 text-sm font-medium rounded-md">
+                <span class="{% if choice.selected %}bg-secondary-500{% else %}bg-primary-500{% endif %} w-2.5 h-2.5 mr-4 rounded-full" aria-hidden="true"></span>
+                <span class="truncate">{{ choice.display }}</span>
+            </a>
+        </li>
+    {% endfor %}
 </ul>

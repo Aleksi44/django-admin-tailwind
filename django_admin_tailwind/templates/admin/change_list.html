@@ -18,7 +18,7 @@
 {% endcomment %}
 {% endblock %}
 
-
+{% block content_title %}{% endblock %}
 {% block content_container_class %}{% endblock %}
 
 {% block extrahead %}
@@ -92,10 +92,9 @@
         <div class="lg:flex{% if cl.has_filters %} filtered{% endif %}">
             <div class="module lg:flex-grow"
                  id="changelist">
-                <div class="changelist-form-container lg:pr-6">
+                <div class="changelist-form-container">
                     {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
 
-                    {% block search %}{% search_form cl %}{% endblock %}
                     <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %}
                           enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
                         {% if cl.formset %}
@@ -105,7 +104,7 @@
                         {% block result_list %}
                             <div class="flex">
                                 {% block object-tools %}
-                                    <ul class="object-tools">
+                                    <ul class="object-tools pl-2 sm:pl-6 lg:pl-8">
                                         {% block object-tools-items %}
                                             {% change_list_object_tools %}
                                         {% endblock %}
@@ -124,14 +123,19 @@
             </div>
             {% block filters %}
                 {% if cl.has_filters %}
-                    <div id="changelist-filter"
-                         style="width: 100px"
-                         class="lg:flex-none py-6">
-                        <h2>{% translate 'Filter' %}</h2>
-                        {% if cl.has_active_filters %}<h3 class="my-4" id="changelist-filter-clear">
-                            <a href="{{ cl.clear_all_filters_qs }}">&#10006; {% translate "Clear all filters" %}</a>
-                        </h3>{% endif %}
-                        {% for spec in cl.filter_specs %}{% admin_list_filter cl spec %}{% endfor %}
+                    <div style="width: 200px; min-height: 100vh;"
+                         class="hidden lg:block lg:sticky lg:top-0 lg:h-full lg:flex-none border-l border-light-200 dark:border-dark-200">
+
+                        <h2 class="px-3 mt-5">{% translate 'Search' %}</h2>
+
+                        {% block search %}{% search_form cl %}{% endblock %}
+
+                        <div class="px-3 mt-5">
+                            {% if cl.has_active_filters %}<div class="my-4" id="changelist-filter-clear"><small>
+                                <a class="text-primary-500" href="{{ cl.clear_all_filters_qs }}" class="">{% translate "Clear all filters" %}</a>
+                            </small></div>{% endif %}
+                            {% for spec in cl.filter_specs %}{% admin_list_filter cl spec %}{% endfor %}
+                        </div>
                     </div>
                 {% endif %}
             {% endblock %}

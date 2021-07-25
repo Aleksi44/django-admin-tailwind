@@ -93,13 +93,8 @@
         @apply px-2 sm:px-6 lg:px-8;
     }
 
-    #content-main {
-        @apply px-2 sm:px-6 lg:px-8;
-    }
-
     .object-tools,
     .actions,
-    #toolbar,
     .results,
     .paginator {
         @apply mt-6;
@@ -143,8 +138,7 @@
     .selector-remove,
     .selector-clearall,
     th a,
-    .message a,
-    #changelist-search a {
+    .message a {
         @apply text-primary-500;
     }
 

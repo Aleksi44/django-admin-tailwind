@@ -1,13 +1,15 @@
 {% load i18n static %}
 {% if cl.search_fields %}
-    <div id="toolbar" class="flex items-center">
+    {% comment %}<div id="toolbar" class="flex items-center">
         <form id="changelist-search" method="get" class="max-w-md">
             <div class="flex items-center">
                 <label for="searchbar">
 
                 </label>
                 <input type="text" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar" autofocus>
-                <input type="submit" class="mx-2 search-button text-white bg-primary-600 hover:bg-primary-700 focus:ring-primary-500" value="{% translate 'Search' %}">
+                <input type="submit"
+                       class="mx-2 search-button text-white bg-primary-600 hover:bg-primary-700 focus:ring-primary-500"
+                       value="{% translate 'Search' %}">
                 {% if show_result_count %}
                     <span class="small quiet">{% blocktranslate count counter=cl.result_count %}{{ counter }} result
                         {% plural %}{{ counter }} results{% endblocktranslate %} (<a href="?
@@ -24,5 +26,45 @@
                 <div class="mt-2 text-sm text-gray-500">{{ cl.search_help_text }}</div>
             {% endif %}
         </form>
+    </div>{% endcomment %}
+
+
+    <div id="toolbar" class="px-3 mt-5">
+        <form id="changelist-search" method="get">
+            {% for pair in cl.params.items %}
+                {% if pair.0 != search_var %}<input type="hidden" name="{{ pair.0 }}" value="{{ pair.1 }}">
+                {% endif %}
+            {% endfor %}
+
+            <div class="mt-1 relative rounded-md shadow-sm">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none" aria-hidden="true">
+                    <svg class="mr-3 h-4 w-4 text-light-400 dark:text-dark-400"
+                         xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 20 20"
+                         fill="currentColor"
+                         aria-hidden="true">
+                        <path fill-rule="evenodd"
+                              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <input type="text"
+                       name="{{ search_var }}"
+                       value="{{ cl.query }}"
+                       id="searchbar"
+                       autofocus
+                       class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-9 sm:text-sm border-light-300 dark:border-dark-300 rounded-md"
+                       placeholder="{% translate 'Search' %}">
+            </div>
+            {% if show_result_count %}
+                <small class="small quiet text-light-900 dark:text-dark-900">{% blocktranslate count counter=cl.result_count %}{{ counter }} result
+                    {% plural %}{{ counter }} results{% endblocktranslate %} (<a class="text-primary-500" href="?
+                            {% if cl.is_popup %}{{ is_popup_var }}=1{% endif %}">{% if cl.show_full_result_count %}
+                    {% blocktranslate with full_result_count=cl.full_result_count %}{{ full_result_count }} total
+                    {% endblocktranslate %}{% else %}{% translate "Show all" %}{% endif %}</a>)</small>
+            {% endif %}
+        </form>
     </div>
+
+
 {% endif %}
