@@ -1,6 +1,6 @@
 {
   "name": "django-admin-tailwind",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Django Admin Tailwind",
   "license": "MIT",
   "repository": "https://github.com/Aleksi44/django-admin-tailwind",
