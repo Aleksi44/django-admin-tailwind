@@ -5,8 +5,8 @@
     </div>
 {% endif %}
 {% if results %}
-    <div class="results">
-        <table id="result_list">
+    <div class="results grid">
+        <table id="result_list" class="overflow-x-auto block whitespace-nowrap">
             <thead {% comment %}class="sticky top-0 table-caption"{% endcomment %}>
             <tr>
                 {% for header in result_headers %}
@@ -14,14 +14,24 @@
                         <div class="flex items-center">
                             {% if header.sortable %}
                                 {% if header.sort_priority > 0 %}
-                                    <div class="sortoptions mx-2">
+                                    <div class="sortoptions mx-2 flex">
                                         <a class="sortremove" href="{{ header.url_remove }}"
                                            title="{% translate "Remove from sorting" %}"></a>
-                                        {% if num_sorted_fields > 1 %}<span class="sortpriority"
+                                        {% if num_sorted_fields > 1 %}<span class="sortpriority pr-1"
                                                                             title="{% blocktranslate with priority_number=header.sort_priority %}Sorting priority: {{ priority_number }}{% endblocktranslate %}">{{ header.sort_priority }}</span>{% endif %}
                                         <a href="{{ header.url_toggle }}"
                                            class="toggle {% if header.ascending %}ascending{% else %}descending{% endif %}"
-                                           title="{% translate "Toggle sorting" %}"></a>
+                                           title="{% translate "Toggle sorting" %}">
+                                            {% if header.ascending %}
+                                                <svg class="w-4 h-full text-light-500 dark:text-dark-500" height="100" preserveaspectratio="xMidYMid meet" viewbox="0 0 100 100" width="100" x="0" xmlns="http://www.w3.org/2000/svg" y="0">
+                                                    <path d="M79.2,66.8a6.2,6.2,0,0,1-8.7,0L50,46.4,29.5,66.8A6.2,6.2,0,0,1,20.8,58L45.6,33.2a6.3,6.3,0,0,1,8.8,0L79.2,58A6.1,6.1,0,0,1,79.2,66.8Z" fill-rule="evenodd"></path>
+                                                </svg>
+                                            {% else %}
+                                                <svg class="w-4 h-full text-light-500 dark:text-dark-500" height="100" preserveaspectratio="xMidYMid meet" viewbox="0 0 100 100" width="100" x="0" xmlns="http://www.w3.org/2000/svg" y="0">
+                                                    <path d="M14.5,29.6a7.5,7.5,0,0,1,10.7,0L50,54.4,74.8,29.6A7.5,7.5,0,1,1,85.5,40.2L55.3,70.4a7.4,7.4,0,0,1-10.6,0L14.5,40.2A7.5,7.5,0,0,1,14.5,29.6Z" fill-rule="evenodd"></path>
+                                                </svg>
+                                            {% endif %}
+                                        </a>
                                     </div>
                                 {% endif %}
                             {% endif %}

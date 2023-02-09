@@ -102,9 +102,9 @@
                         {% endif %}
 
                         {% block result_list %}
-                            <div class="flex">
+                            {% if action_form and actions_on_top and cl.show_admin_actions %}<div class="flex m-4">{% endif %}
                                 {% block object-tools %}
-                                    <ul class="object-tools pl-2 sm:pl-6 lg:pl-8">
+                                    <ul class="object-tools">
                                         {% block object-tools-items %}
                                             {% change_list_object_tools %}
                                         {% endblock %}
@@ -112,7 +112,7 @@
                                 {% endblock %}
                                 {% if action_form and actions_on_top and cl.show_admin_actions %}
                                     {% admin_actions %}{% endif %}
-                            </div>
+                            {% if action_form and actions_on_top and cl.show_admin_actions %}</div>{% endif %}
                             {% result_list cl %}
                             {% if action_form and actions_on_bottom and cl.show_admin_actions %}
                                 {% admin_actions %}{% endif %}
@@ -126,7 +126,7 @@
             </div>
             {% block filters %}
                 {% if cl.has_filters %}
-                    <div style="width: 200px; min-height: 100vh;"
+                    <div style="width: 16rem; min-height: 100vh;"
                          class="hidden lg:block lg:sticky lg:top-0 lg:h-full lg:flex-none border-l border-light-200 dark:border-dark-200">
 
                         <h2 class="px-3 mt-5">{% translate 'Search' %}</h2>

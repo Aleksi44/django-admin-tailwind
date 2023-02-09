@@ -4,14 +4,14 @@
      data-inline-formset="{{ inline_admin_formset.inline_formset_data }}">
   <div class="tabular inline-related {% if forloop.last %}last-related{% endif %}">
 {{ inline_admin_formset.formset.management_form }}
-<fieldset class="module {{ inline_admin_formset.classes }}">
+<fieldset class="module grid {{ inline_admin_formset.classes }}">
    {% if inline_admin_formset.formset.max_num == 1 %}
-     <h2>{{ inline_admin_formset.opts.verbose_name|capfirst }}</h2>
+     <h2 class="my-6">{{ inline_admin_formset.opts.verbose_name|capfirst }}</h2>
    {% else %}
-     <h2>{{ inline_admin_formset.opts.verbose_name_plural|capfirst }}</h2>
+     <h2 class="my-6">{{ inline_admin_formset.opts.verbose_name_plural|capfirst }}</h2>
    {% endif %}
    {{ inline_admin_formset.formset.non_form_errors }}
-   <table>
+   <table class="overflow-x-auto overflow-y-hidden block whitespace-nowrap">
      <thead><tr>
        <th class="original"></th>
      {% for field in inline_admin_formset.fields %}

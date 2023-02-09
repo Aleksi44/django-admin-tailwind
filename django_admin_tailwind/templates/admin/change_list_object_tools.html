@@ -2,7 +2,7 @@
 
 {% block object-tools-items %}
   {% if has_add_permission %}
-  <li>
+  <li class="pl-2">
     {% url cl.opts|admin_urlname:'add' as add_url %}
     <a href="{% add_preserved_filters add_url is_popup to_field %}"
        class="addlink text-white bg-primary-600 hover:bg-primary-700 focus:ring-primary-500">

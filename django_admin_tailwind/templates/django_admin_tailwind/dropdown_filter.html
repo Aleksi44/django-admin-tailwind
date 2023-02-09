@@ -1,0 +1,21 @@
+{% load i18n %}
+<script type="text/javascript">var go_from_select = function(opt) { window.location = window.location.pathname + opt };</script>
+<span class="block my-4 text-xs font-semibold text-light-900 dark:text-dark-900">{% blocktrans with title as filter_title %} By {{ filter_title }} {% endblocktrans %}</span>
+<ul class="admin-filter-{{ title|cut:' ' }}">
+    {% if choices|slice:"4:" %}
+        <li>
+        <select style="width: 95%;"
+            onchange="go_from_select(this.options[this.selectedIndex].value)">
+        {% for choice in choices %}
+            <option{% if choice.selected %} selected="selected"{% endif %}
+             value="{{ choice.query_string|iriencode }}">{{ choice.display }}</option>
+        {% endfor %}
+        </select>
+        </li>
+    {% else %}
+        {% for choice in choices %}
+            <li{% if choice.selected %} class="selected"{% endif %}>
+            <a href="{{ choice.query_string|iriencode }}">{{ choice.display }}</a></li>
+        {% endfor %}
+    {% endif %}
+</ul>

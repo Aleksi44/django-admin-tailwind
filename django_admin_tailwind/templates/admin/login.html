@@ -39,7 +39,7 @@
             </h2>
 
             {% if form.errors and not form.non_field_errors %}
-                <p class="text-center text-red-900">
+                <p class="text-center text-red-900 mt-4">
                     {% if form.errors.items|length == 1 %}{% translate "Please correct the error below." %}{% else %}
                         {% translate "Please correct the errors below." %}{% endif %}
                 </p>
@@ -47,14 +47,14 @@
 
             {% if form.non_field_errors %}
                 {% for error in form.non_field_errors %}
-                    <p class="text-center text-red-900">
+                    <p class="text-center text-red-900 mt-4">
                         {{ error }}
                     </p>
                 {% endfor %}
             {% endif %}
 
             {% if user.is_authenticated %}
-                <p class="text-center text-light-900 dark:text-dark-900">
+                <p class="text-center text-red-900 mt-4">
                     {% blocktranslate trimmed %}
                         You are authenticated as {{ username }}, but are not authorized to
                         access this page. Would you like to login to a different account?

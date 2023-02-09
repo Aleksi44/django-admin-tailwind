@@ -12,15 +12,15 @@
     }
 
     h1 {
-        @apply text-lg font-extrabold;
+        @apply text-3xl font-extrabold;
     }
 
     h2 {
-        @apply text-base font-medium;
+        @apply text-2xl font-medium;
     }
 
     h3 {
-        @apply text-sm font-light;
+        @apply text-xl font-light;
     }
 
     p {
@@ -84,20 +84,12 @@
 
 @layer components {
 
-    /* Layouts */
     .w-full-input > input {
         @apply w-full;
     }
 
     .spacing-x-regular {
         @apply px-2 sm:px-6 lg:px-8;
-    }
-
-    .object-tools,
-    .actions,
-    .results,
-    .paginator {
-        @apply mt-6;
     }
 
     .addlink,
@@ -138,12 +130,18 @@
     .selector-remove,
     .selector-clearall,
     th a,
+    td a,
+    fieldset a,
     .message a {
         @apply text-primary-500;
     }
 
-    fieldset {
-        @apply mt-6 grid grid-cols-1 gap-6 max-w-md;
+    fieldset label {
+        @apply text-sm font-medium text-light-500 dark:text-dark-500;
+    }
+
+    fieldset .readonly {
+        @apply text-sm text-light-900 dark:text-dark-900;
     }
 
     div[disabled] {
@@ -155,10 +153,23 @@
     }
 
     .paginator > a {
-        @apply relative inline-flex items-center px-4 py-2 border border-light-300 dark:border-dark-300 text-sm font-medium text-light-700 dark:text-dark-700 hover:bg-light-50 dark:hover:bg-dark-50;
+        @apply rounded relative inline-flex items-center px-4 py-2 border border-light-300 dark:border-dark-300 text-sm font-medium text-light-700 dark:text-dark-700 hover:bg-light-50 dark:hover:bg-dark-50;
     }
 
     .paginator > .this-page {
-        @apply bg-primary-600 text-white relative inline-flex items-center px-4 py-2 border border-light-300 dark:border-dark-300 text-sm font-medium hover:bg-primary-700;
+        @apply rounded bg-primary-600 text-white relative inline-flex items-center px-4 py-2 border border-light-300 dark:border-dark-300 text-sm font-medium hover:bg-primary-700;
+    }
+
+    .object-tools.change-form {
+        @apply flex flex-wrap my-4;
+    }
+
+    .object-tools.change-form > li > a {
+        @apply mr-2 bg-primary-600 text-white relative inline-flex items-center px-4 py-2 border border-light-300 dark:border-dark-300 text-sm font-medium hover:bg-primary-700 rounded;
+    }
+
+    .selector h2,
+    .selector-chosen h2 {
+        @apply text-base;
     }
 }

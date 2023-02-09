@@ -1,5 +1,5 @@
 {% load i18n admin_urls %}
-<div class="submit-row flex my-12">
+<div class="submit-row flex my-12 justify-end bg-light-50 dark:bg-dark-50 p-4 rounded">
 {% block submit-row %}
 {% if show_save %}<input type="submit" value="{% translate 'Save' %}" class="default saveinput order-last text-white bg-primary-600 hover:bg-primary-700 focus:ring-primary-500" name="_save">{% endif %}
 {% if show_delete_link and original %}
