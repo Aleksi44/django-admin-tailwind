@@ -133,7 +133,7 @@
     td a,
     fieldset a,
     .message a {
-        @apply text-primary-500;
+        @apply text-primary-500 dark:text-secondary-500;
     }
 
     fieldset label {
