@@ -96,6 +96,7 @@
     {% endblock %}
     {% block blockbots %}
         <meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.11.1/dist/cdn.min.js" defer></script>
 </head>
 
 <body class="bg-light-0 dark:bg-dark-0 {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
@@ -376,7 +377,6 @@
 </div>
 <!-- END Container -->
 
-<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 {% block scripts %}{% endblock %}
 </body>
 </html>
