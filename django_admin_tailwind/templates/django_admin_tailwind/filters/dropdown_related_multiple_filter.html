@@ -1,0 +1,16 @@
+{% extends 'django_admin_tailwind/filters/_dropdown.html' %}
+{% load i18n %}
+
+{% block input_placeholder %}{% if spec.lookup_val %}{{ spec.lookup_val|length }} selected{% else %}{% trans "All" %}{% endif %}{% endblock %}
+
+{% block choice_href %}
+    let url = new URL(window.location)
+    let params = new URLSearchParams(url.search)
+    let lookupValue = params.get(this.lookupKwarg)
+    if (lookupValue !== null) {
+        params.set(this.lookupKwarg, `${lookupValue},${choice.id}`)
+    } else {
+        params.set(this.lookupKwarg, choice.id)
+    }
+    return `?${params.toString()}`
+{% endblock %}

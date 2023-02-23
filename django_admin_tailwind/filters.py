@@ -1,26 +1,21 @@
 from django.contrib.admin.utils import get_model_from_relation
-from django.contrib.admin.filters import AllValuesFieldListFilter, RelatedFieldListFilter, FieldListFilter
+from django.contrib.admin.filters import RelatedFieldListFilter, FieldListFilter
 from django.utils.translation import gettext_lazy as _
 
 
 class DropdownRelatedFilter(RelatedFieldListFilter):
-    template = 'django_admin_tailwind/dropdown_filter.html'
+    template = 'django_admin_tailwind/filters/dropdown_related_filter.html'
 
     def __init__(self, field, request, params, model, model_admin, field_path):
         super().__init__(field, request, params, model, model_admin, field_path)
+        self.app_label = model._meta.app_label
+        self.model_name = model._meta.model_name
+        self.field_path = field_path
         self.request = request
 
 
-class DropdownValuesFilter(AllValuesFieldListFilter):
-    template = 'django_admin_tailwind/dropdown_filter.html'
-
-    def __init__(self, field, request, params, model, model_admin, field_path):
-        super().__init__(field, request, params, model, model_admin, field_path)
-        self.request = request
-
-
-class DropdownMultipleRelatedFilter(FieldListFilter):
-    template = 'django_admin_tailwind/dropdown_filter.html'
+class DropdownRelatedMultipleFilter(FieldListFilter):
+    template = 'django_admin_tailwind/filters/dropdown_related_multiple_filter.html'
 
     def __init__(self, field, request, params, model, model_admin, field_path):
         other_model = get_model_from_relation(field)
@@ -36,6 +31,9 @@ class DropdownMultipleRelatedFilter(FieldListFilter):
             self.lookup_title = other_model._meta.verbose_name
         self.title = self.lookup_title
         self.empty_value_display = model_admin.get_empty_value_display()
+        self.app_label = model._meta.app_label
+        self.model_name = model._meta.model_name
+        self.field_path = field_path
         self.request = request
 
     @property
