@@ -61,41 +61,43 @@
                 }
             }">
         <label class="block my-4 text-xs font-semibold text-light-900 dark:text-dark-900">{% blocktrans with title as filter_title %} By {{ filter_title }} {% endblocktrans %}</label>
-        <div class="relative mt-1" x-on:click.outside="open = false">
-            <input type="text"
-                   x-on:click="toggle()"
-                   @input.debounce="inputChange($event)"
-                   placeholder="{% block input_placeholder %}{% if spec.lookup_val %}1 selected{% else %}{% trans "All" %}{% endif %}{% endblock %}"
-                   class="w-full rounded-md border border-light-300 dark:border-dark-300 bg-light-0 dark:bg-dark-0 py-2 pl-3 pr-12 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-                   >
-            <button x-on:click="toggle()"
-                    type="button"
-                    class="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
-                <svg class="h-5 w-5 text-light-400 dark:text-dark-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                     fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd"
-                          d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z"
-                          clip-rule="evenodd"/>
-                </svg>
-            </button>
-            <div class="absolute z-10 mt-1 max-h-32 w-full overflow-auto rounded-md bg-light-0 dark:bg-dark-0 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-                x-show="open"
-                style="display: none;">
-                    {% include 'django_admin_tailwind/filters/dropdown_element.html' with choice=choices.0 %}
-                    {% for choice in choices %}
-                        {% if choice.selected and forloop.counter0 > 0 %}
-                            {% include 'django_admin_tailwind/filters/dropdown_element.html' with choice=choice %}
-                        {% endif %}
-                    {% endfor %}
-                    <template x-for="(choice, i) in choices" :key="`choice-${i}`">
-                        <template x-if="choiceSelected(choice) === false">
-                            {% include 'django_admin_tailwind/filters/dropdown_element.html' %}
+        {% block dropdown %}
+            <div class="relative mt-1" x-on:click.outside="open = false">
+                <input type="text"
+                       x-on:click="toggle()"
+                       @input.debounce="inputChange($event)"
+                       placeholder="{% block input_placeholder %}{% if spec.lookup_val %}1 selected{% else %}{% trans "All" %}{% endif %}{% endblock %}"
+                       class="w-full rounded-md border border-light-300 dark:border-dark-300 bg-light-0 dark:bg-dark-0 py-2 pl-3 pr-12 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                       >
+                <button x-on:click="toggle()"
+                        type="button"
+                        class="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+                    <svg class="h-5 w-5 text-light-400 dark:text-dark-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                         fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                              d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z"
+                              clip-rule="evenodd"/>
+                    </svg>
+                </button>
+                <div class="absolute z-10 mt-1 max-h-32 w-full overflow-auto rounded-md bg-light-0 dark:bg-dark-0 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                    x-show="open"
+                    style="display: none;">
+                        {% include 'django_admin_tailwind/filters/dropdown_element.html' with choice=choices.0 %}
+                        {% for choice in choices %}
+                            {% if choice.selected and forloop.counter0 > 0 %}
+                                {% include 'django_admin_tailwind/filters/dropdown_element.html' with choice=choice %}
+                            {% endif %}
+                        {% endfor %}
+                        <template x-for="(choice, i) in choices" :key="`choice-${i}`">
+                            <template x-if="choiceSelected(choice) === false">
+                                {% include 'django_admin_tailwind/filters/dropdown_element.html' %}
+                            </template>
                         </template>
-                    </template>
-                    <template x-if="choices.length > 0">
-                        <div x-intersect="pagination()"></div>
-                    </template>
+                        <template x-if="choices.length > 0">
+                            <div x-intersect="pagination()"></div>
+                        </template>
+                </div>
             </div>
-        </div>
+        {% endblock %}
     </div>
 {% endwith %}

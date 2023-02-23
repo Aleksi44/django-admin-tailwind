@@ -132,6 +132,7 @@
     th a,
     td a,
     fieldset a,
+    .showall,
     .message a {
         @apply text-primary-500 dark:text-secondary-500;
     }

@@ -1,7 +1,15 @@
 {% load admin_list %}
 {% load i18n %}
-<div class="pt-6">
-    <nav class="paginator">
+<div class="py-6">
+    <div class="flex">
+        <p>
+            {{ cl.result_count }}
+            {% if cl.result_count == 1 %}{{ cl.opts.verbose_name }}{% else %}{{ cl.opts.verbose_name_plural }}{% endif %}
+        </p>
+        {% if show_all_url %}<a href="{{ show_all_url }}" class="ml-4 showall">{% translate 'Show all' %}</a>{% endif %}
+    </div>
+
+    <nav class="pt-4 paginator">
         {% if pagination_required %}
             {% for i in page_range %}
                 {% paginator_number cl i %}
@@ -9,11 +17,26 @@
         {% endif %}
     </nav>
 
-    <p class="py-6">
-        {{ cl.result_count }}
-        {% if cl.result_count == 1 %}{{ cl.opts.verbose_name }}{% else %}{{ cl.opts.verbose_name_plural }}{% endif %}
-        {% if show_all_url %}<a href="{{ show_all_url }}" class="showall">{% translate 'Show all' %}</a>{% endif %}
+    <div>
+        {% if cl.dynamic %}
+            <div class="pt-4 flex items-center">
+                <p>{% translate 'Number of items per page' %} : </p>
+                {% with '5 10 25 50 100 250 500 1000' as list %}
+                    <select style="max-width: 100px" class="ml-4 w-full rounded-md border border-light-300 dark:border-dark-300 bg-light-0 dark:bg-dark-0 py-2 pl-3 pr-12 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                            onchange="if (this.value) var p = new URLSearchParams(location.search);p.set('list_per_page', this.value);window.location.search = p.toString();">
+                        {% if cl.list_per_page|slugify not in list.split %}
+                            <option selected>{{ cl.list_per_page }}</option>
+                        {% endif %}
+                        {% for i in list.split %}
+                            <option value="{{ i }}" {% if cl.list_per_page|slugify == i %}selected{% endif %}>{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                {% endwith %}
+            </div>
+        {% endif %}
+
         {% if cl.formset and cl.result_count %}
-            <input type="submit" name="_save" class="default" value="{% translate 'Save' %}">{% endif %}
-    </p>
+            <input type="submit" name="_save" class="default" value="{% translate 'Save' %}">
+        {% endif %}
+    </div>
 </div>
