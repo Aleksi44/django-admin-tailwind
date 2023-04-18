@@ -1,10 +1,42 @@
 {% load i18n %}
-<div id="nav-sidebar" style="min-height: 100vh;" class="hidden lg:sticky lg:top-0 lg:h-full lg:flex lg:flex-shrink-0 lg:flex lg:flex-shrink-0">
-    <div class="flex flex-col w-64 border-r border-light-200 dark:border-dark-200 pb-4">
-        <div class="h-0 flex-1 flex flex-col overflow-y-auto">
-            <nav>
-                {% include 'admin/app_list.html' with app_list=available_apps show_changelinks=False %}
-            </nav>
+<div x-data="{ show: true }" class="relative flex">
+    <div x-show="show" id="nav-sidebar" style="min-height: 100vh;" class="hidden lg:sticky lg:top-0 lg:h-full lg:flex lg:flex-shrink-0 lg:flex lg:flex-shrink-0">
+        <div class="flex flex-col w-64 border-r border-light-200 dark:border-dark-200 pb-4">
+            <div class="h-0 flex-1 flex flex-col overflow-y-auto">
+                <nav>
+                    {% include 'admin/app_list.html' with app_list=available_apps show_changelinks=False %}
+                </nav>
+            </div>
         </div>
     </div>
+    <button class="border-r border-light-200 dark:border-dark-200 bg-light-100 dark:bg-dark-100"
+            @click="show = !show">
+        <svg class="m-1 h-6 w-6 text-primary-500"
+             height="100"
+             preserveaspectratio="xMidYMid meet"
+             viewbox="0 0 100 100"
+             width="100"
+             x="0"
+             xmlns="http://www.w3.org/2000/svg"
+             y="0">
+         <path
+               d="M47.9,80l-30-30,30-30M82.1,80l-30-30,30-30"
+               stroke="currentColor"
+               fill="none"
+               stroke-linecap="round"
+               stroke-linejoin="round"
+               x-show="show === true"
+               stroke-width="8">
+         </path>
+          <path
+               d="M52.1,20l30,30-30,30M17.9,20l30,30-30,30"
+               stroke="currentColor"
+               fill="none"
+               stroke-linecap="round"
+               stroke-linejoin="round"
+               x-show="show === false"
+               stroke-width="8">
+         </path>
+        </svg>
+    </button>
 </div>

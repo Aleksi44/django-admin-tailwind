@@ -1,6 +1,10 @@
 from django.contrib.admin.utils import get_model_from_relation
-from django.contrib.admin.filters import RelatedFieldListFilter, FieldListFilter
+from django.contrib.admin.filters import AllValuesFieldListFilter, RelatedFieldListFilter, FieldListFilter
 from django.utils.translation import gettext_lazy as _
+
+
+class DropdownChoiceFilter(AllValuesFieldListFilter):
+    template = 'django_admin_tailwind/filters/dropdown_choice_filter.html'
 
 
 class DropdownRelatedFilter(RelatedFieldListFilter):

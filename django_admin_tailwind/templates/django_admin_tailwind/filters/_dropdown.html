@@ -82,15 +82,15 @@
                 <div class="absolute z-10 mt-1 max-h-32 w-full overflow-auto rounded-md bg-light-0 dark:bg-dark-0 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                     x-show="open"
                     style="display: none;">
-                        {% include 'django_admin_tailwind/filters/dropdown_element.html' with choice=choices.0 %}
+                        {% include 'django_admin_tailwind/filters/_dropdown_element.html' with choice=choices.0 %}
                         {% for choice in choices %}
                             {% if choice.selected and forloop.counter0 > 0 %}
-                                {% include 'django_admin_tailwind/filters/dropdown_element.html' with choice=choice %}
+                                {% include 'django_admin_tailwind/filters/_dropdown_element.html' with choice=choice %}
                             {% endif %}
                         {% endfor %}
                         <template x-for="(choice, i) in choices" :key="`choice-${i}`">
                             <template x-if="choiceSelected(choice) === false">
-                                {% include 'django_admin_tailwind/filters/dropdown_element.html' %}
+                                {% include 'django_admin_tailwind/filters/_dropdown_element.html' %}
                             </template>
                         </template>
                         <template x-if="choices.length > 0">

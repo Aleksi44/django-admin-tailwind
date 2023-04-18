@@ -59,16 +59,14 @@
              x-cloak
              x-show="preview === true"
              :class="{ 'fixed inset-0 z-50 flex items-center justify-center': preview === true }">
-            <div @click.away="preview = false, urlIframe = null" class="w-11/12 md:max-w-3xl mx-auto rounded py-4 text-left px-6">
-                <div class="rounded-2xl bg-light-0 dark:bg-dark-0 overflow-y-auto relative" style="max-height: 50rem">
-                    {% comment %}
-                        <div class="absolute cursor-pointer z-50 top-4 right-4" @click="preview = false">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-light-900 dark:text-dark-900" x="0" y="0" width="25" height="25" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-                                <path class="svg-fill-primary" d="M14.4,14.4a6.3,6.3,0,0,1,8.8,0L50,41.2,76.8,14.4a6.2,6.2,0,0,1,8.8,8.8L58.8,50,85.6,76.8a6.2,6.2,0,0,1-8.8,8.8L50,58.8,23.2,85.6a6.2,6.2,0,0,1-8.8-8.8L41.2,50,14.4,23.2A6.3,6.3,0,0,1,14.4,14.4Z" fill-rule="evenodd"></path>
-                            </svg>
-                        </div>
-                    {% endcomment %}
-                    <iframe class="w-full" style="height: 50vh" :src="urlIframe"></iframe>
+            <div @click.away="preview = false, urlIframe = null" class="w-11/12 md:max-w-7xl mx-auto rounded py-4 text-left px-6">
+                <div class="rounded-2xl bg-light-0 dark:bg-dark-0 overflow-y-auto relative" style="max-height: 75rem">
+                    <div class="absolute cursor-pointer z-50 top-4 right-4" @click="preview = false">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-light-900 dark:text-dark-900" x="0" y="0" width="25" height="25" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                            <path class="svg-fill-primary" d="M14.4,14.4a6.3,6.3,0,0,1,8.8,0L50,41.2,76.8,14.4a6.2,6.2,0,0,1,8.8,8.8L58.8,50,85.6,76.8a6.2,6.2,0,0,1-8.8,8.8L50,58.8,23.2,85.6a6.2,6.2,0,0,1-8.8-8.8L41.2,50,14.4,23.2A6.3,6.3,0,0,1,14.4,14.4Z" fill-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <iframe class="w-full" style="height: 75vh" :src="urlIframe"></iframe>
                 </div>
             </div>
         </div>
