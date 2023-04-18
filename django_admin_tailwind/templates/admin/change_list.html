@@ -126,10 +126,9 @@
             </div>
             {% block filters %}
                 {% if cl.has_filters %}
-                    <div x-data="{ show: true }" class="relative flex">
-                        <button class="relative w-6 border-l border-light-200 dark:border-dark-200 bg-light-100 dark:bg-dark-100"
-                                @click="show = !show">
-                            <svg class="absolute w-full left-0 top-40 h-6 text-primary-500"
+                    <div class="relative flex">
+                        <button id="btn-filters" class="relative w-6 border-l border-light-200 dark:border-dark-200 bg-light-100 dark:bg-dark-100">
+                            <svg id="svg-collapse" class="transform -rotate-180 absolute w-full left-0 top-40 h-6 text-primary-500"
                                  height="100"
                                  preserveaspectratio="xMidYMid meet"
                                  viewbox="0 0 100 100"
@@ -143,32 +142,24 @@
                                    fill="none"
                                    stroke-linecap="round"
                                    stroke-linejoin="round"
-                                   x-show="show === false"
-                                   stroke-width="8">
-                             </path>
-                              <path
-                                   d="M52.1,20l30,30-30,30M17.9,20l30,30-30,30"
-                                   stroke="currentColor"
-                                   fill="none"
-                                   stroke-linecap="round"
-                                   stroke-linejoin="round"
-                                   x-show="show === true"
                                    stroke-width="8">
                              </path>
                             </svg>
                         </button>
-                        <div x-show="show" style="width: 16rem; min-height: 100vh;"
-                             class="hidden lg:block lg:sticky lg:top-0 lg:h-full lg:flex-none border-l border-light-200 dark:border-dark-200">
+                        <div id="container-filters">
+                            <div style="width: 16rem; min-height: 100vh;"
+                                 class="hidden lg:block lg:sticky lg:top-0 lg:h-full lg:flex-none border-l border-light-200 dark:border-dark-200">
 
-                            <h2 class="px-3 mt-5">{% translate 'Search' %}</h2>
+                                <h2 class="px-3 mt-5">{% translate 'Search' %}</h2>
 
-                            {% block search %}{% search_form cl %}{% endblock %}
+                                {% block search %}{% search_form cl %}{% endblock %}
 
-                            <div class="px-3 mt-5">
-                                {% if cl.has_active_filters %}<div class="my-4" id="changelist-filter-clear"><small>
-                                    <a class="text-primary-500" href="{{ cl.clear_all_filters_qs }}" class="">{% translate "Clear all filters" %}</a>
-                                </small></div>{% endif %}
-                                {% for spec in cl.filter_specs %}{% admin_list_filter cl spec %}{% endfor %}
+                                <div class="px-3 mt-5">
+                                    {% if cl.has_active_filters %}<div class="my-4" id="changelist-filter-clear"><small>
+                                        <a class="text-primary-500" href="{{ cl.clear_all_filters_qs }}" class="">{% translate "Clear all filters" %}</a>
+                                    </small></div>{% endif %}
+                                    {% for spec in cl.filter_specs %}{% admin_list_filter cl spec %}{% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -176,4 +167,25 @@
             {% endblock %}
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let collapse = true;
+            const btnFilters = document.getElementById('btn-filters');
+            const containerFilters = document.getElementById('container-filters');
+            const svgCollapse = document.getElementById('svg-collapse');
+            btnFilters.addEventListener("click", btnClick);
+            function btnClick() {
+                collapse = !collapse;
+                if (collapse) {
+                    containerFilters.classList.remove("hidden");
+                    svgCollapse.classList.remove("rotate-0");
+                    svgCollapse.classList.add("-rotate-180");
+                } else {
+                    svgCollapse.classList.remove("-rotate-180");
+                    containerFilters.classList.add("hidden");
+                    svgCollapse.classList.add("rotate-0");
+                }
+            }
+        });
+    </script>
 {% endblock %}

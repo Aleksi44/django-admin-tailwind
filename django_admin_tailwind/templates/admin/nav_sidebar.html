@@ -11,8 +11,9 @@
     </div>
     <button class="relative w-6 border-r border-light-200 dark:border-dark-200 bg-light-100 dark:bg-dark-100"
             @click="show = !show">
-        <svg class="absolute w-full left-0 top-40 h-6 text-primary-500"
+        <svg class="transform rotate-0 absolute w-full left-0 top-40 h-6 text-primary-500"
              height="100"
+             :class="{ '-rotate-180': !(show), 'rotate-0': show }"
              preserveaspectratio="xMidYMid meet"
              viewbox="0 0 100 100"
              width="100"
@@ -25,16 +26,6 @@
                fill="none"
                stroke-linecap="round"
                stroke-linejoin="round"
-               x-show="show === true"
-               stroke-width="8">
-         </path>
-          <path
-               d="M52.1,20l30,30-30,30M17.9,20l30,30-30,30"
-               stroke="currentColor"
-               fill="none"
-               stroke-linecap="round"
-               stroke-linejoin="round"
-               x-show="show === false"
                stroke-width="8">
          </path>
         </svg>
