@@ -102,17 +102,17 @@
                         {% endif %}
 
                         {% block result_list %}
-                            {% if action_form and actions_on_top and cl.show_admin_actions %}<div class="flex m-4">{% endif %}
-                                {% block object-tools %}
-                                    <ul class="object-tools">
-                                        {% block object-tools-items %}
-                                            {% change_list_object_tools %}
-                                        {% endblock %}
-                                    </ul>
-                                {% endblock %}
-                                {% if action_form and actions_on_top and cl.show_admin_actions %}
-                                    {% admin_actions %}{% endif %}
-                            {% if action_form and actions_on_top and cl.show_admin_actions %}</div>{% endif %}
+                                {% if action_form and actions_on_top and cl.show_admin_actions %}<div class="flex">{% endif %}
+                                    {% block object-tools %}
+                                        <ul class="m-4 object-tools">
+                                            {% block object-tools-items %}
+                                                {% change_list_object_tools %}
+                                            {% endblock %}
+                                        </ul>
+                                    {% endblock %}
+                                    {% if action_form and actions_on_top and cl.show_admin_actions %}
+                                        {% admin_actions %}{% endif %}
+                                {% if action_form and actions_on_top and cl.show_admin_actions %}</div>{% endif %}
                             {% result_list cl %}
                             {% if action_form and actions_on_bottom and cl.show_admin_actions %}
                                 {% admin_actions %}{% endif %}
@@ -126,18 +126,50 @@
             </div>
             {% block filters %}
                 {% if cl.has_filters %}
-                    <div style="width: 16rem; min-height: 100vh;"
-                         class="hidden lg:block lg:sticky lg:top-0 lg:h-full lg:flex-none border-l border-light-200 dark:border-dark-200">
+                    <div x-data="{ show: true }" class="relative flex">
+                        <button class="relative w-6 border-l border-light-200 dark:border-dark-200 bg-light-100 dark:bg-dark-100"
+                                @click="show = !show">
+                            <svg class="absolute w-full left-0 top-40 h-6 text-primary-500"
+                                 height="100"
+                                 preserveaspectratio="xMidYMid meet"
+                                 viewbox="0 0 100 100"
+                                 width="100"
+                                 x="0"
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 y="0">
+                             <path
+                                   d="M47.9,80l-30-30,30-30M82.1,80l-30-30,30-30"
+                                   stroke="currentColor"
+                                   fill="none"
+                                   stroke-linecap="round"
+                                   stroke-linejoin="round"
+                                   x-show="show === false"
+                                   stroke-width="8">
+                             </path>
+                              <path
+                                   d="M52.1,20l30,30-30,30M17.9,20l30,30-30,30"
+                                   stroke="currentColor"
+                                   fill="none"
+                                   stroke-linecap="round"
+                                   stroke-linejoin="round"
+                                   x-show="show === true"
+                                   stroke-width="8">
+                             </path>
+                            </svg>
+                        </button>
+                        <div x-show="show" style="width: 16rem; min-height: 100vh;"
+                             class="hidden lg:block lg:sticky lg:top-0 lg:h-full lg:flex-none border-l border-light-200 dark:border-dark-200">
 
-                        <h2 class="px-3 mt-5">{% translate 'Search' %}</h2>
+                            <h2 class="px-3 mt-5">{% translate 'Search' %}</h2>
 
-                        {% block search %}{% search_form cl %}{% endblock %}
+                            {% block search %}{% search_form cl %}{% endblock %}
 
-                        <div class="px-3 mt-5">
-                            {% if cl.has_active_filters %}<div class="my-4" id="changelist-filter-clear"><small>
-                                <a class="text-primary-500" href="{{ cl.clear_all_filters_qs }}" class="">{% translate "Clear all filters" %}</a>
-                            </small></div>{% endif %}
-                            {% for spec in cl.filter_specs %}{% admin_list_filter cl spec %}{% endfor %}
+                            <div class="px-3 mt-5">
+                                {% if cl.has_active_filters %}<div class="my-4" id="changelist-filter-clear"><small>
+                                    <a class="text-primary-500" href="{{ cl.clear_all_filters_qs }}" class="">{% translate "Clear all filters" %}</a>
+                                </small></div>{% endif %}
+                                {% for spec in cl.filter_specs %}{% admin_list_filter cl spec %}{% endfor %}
+                            </div>
                         </div>
                     </div>
                 {% endif %}

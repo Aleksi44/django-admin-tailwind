@@ -165,7 +165,8 @@
         @apply flex flex-wrap my-4;
     }
 
-    .object-tools.change-form > li > a {
+    .object-tools.change-form > li > a,
+    .object-tools.change-form > li > button {
         @apply mr-2 bg-primary-600 text-white relative inline-flex items-center px-4 py-2 border border-light-300 dark:border-dark-300 text-sm font-medium hover:bg-primary-700 rounded;
     }
 
