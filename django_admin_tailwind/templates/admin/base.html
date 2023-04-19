@@ -82,12 +82,7 @@
             - vIntegerField
             - this-page
     {% endcomment %}
-    {% if not is_popup and is_nav_sidebar_enabled %}
-        {% comment %}<link rel="stylesheet" type="text/css" href="{% static "admin/css/nav_sidebar.css" %}">{% endcomment %}
-        <script src="{% static 'admin/js/nav_sidebar.js' %}" defer></script>
-    {% endif %}
     {% block extrastyle %}{% endblock %}
-    {#{% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">{% endif %}#}
     {% block extrahead %}{% endblock %}
     {% block responsive %}
         <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -101,6 +96,7 @@
 </head>
 
 <body class="bg-light-0 dark:bg-dark-0 {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
+      {% block bodystyle %}{% endblock %}
       data-admin-utc-offset="{% now "Z" %}">
 
 <!-- Container -->
