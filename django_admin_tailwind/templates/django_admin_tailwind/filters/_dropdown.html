@@ -3,16 +3,18 @@
 {% with filter_id=title|cut:' ' %}
     <div x-data="{
                 init() {
-                    this.choices = []
-                    this.page = 1
-                    this.paginationMore = false
-                    this.selected = []
-                    this.lookupKwarg = '{{ spec.lookup_kwarg }}'
-                    this.term = ''
-                    this.choices = []
-                    this.open = false
-                    this.setSelected()
-                    this.fetchAutocomplete()
+                    {% block init %}
+                        this.choices = []
+                        this.page = 1
+                        this.paginationMore = false
+                        this.selected = []
+                        this.lookupKwarg = '{{ spec.lookup_kwarg }}'
+                        this.term = ''
+                        this.choices = []
+                        this.open = false
+                        this.setSelected()
+                        this.fetchAutocomplete()
+                    {% endblock %}
                 },
                 setSelected() {
                     let url = new URL(window.location)
@@ -31,7 +33,9 @@
                     {% endblock %}
                 },
                 choiceSelected(choice) {
-                    return this.selected.includes(choice.id)
+                    {% block choice_selected %}
+                        return this.selected.includes(choice.id)
+                    {% endblock %}
                 },
                 toggle() {
                     if (this.open) {
@@ -41,11 +45,13 @@
                     }
                 },
                 inputChange(event) {
-                    this.page = 1
-                    this.open = true
-                    this.choices = []
-                    this.term = event.target.value
-                    this.fetchAutocomplete()
+                    {% block input_change %}
+                        this.page = 1
+                        this.open = true
+                        this.choices = []
+                        this.term = event.target.value
+                        this.fetchAutocomplete()
+                    {% endblock %}
                 },
                 pagination() {
                     if (this.paginationMore === true) {
@@ -93,9 +99,11 @@
                                 {% include 'django_admin_tailwind/filters/_dropdown_element.html' %}
                             </template>
                         </template>
-                        <template x-if="choices.length > 0">
-                            <div x-intersect="pagination()"></div>
-                        </template>
+                        {% block template_pagination %}
+                            <template x-if="choices.length > 0">
+                                <div x-intersect="pagination()"></div>
+                            </template>
+                        {% endblock %}
                 </div>
             </div>
         {% endblock %}

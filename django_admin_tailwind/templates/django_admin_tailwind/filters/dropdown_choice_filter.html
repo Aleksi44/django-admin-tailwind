@@ -1,21 +1,45 @@
+{% extends 'django_admin_tailwind/filters/_dropdown.html' %}
 {% load i18n %}
-<script type="text/javascript">var go_from_select = function(opt) { window.location = window.location.pathname + opt };</script>
-<label class="block my-4 text-xs font-semibold text-light-900 dark:text-dark-900">{% blocktrans with title as filter_title %} By {{ filter_title }} {% endblocktrans %}</label>
-<ul class="admin-filter-{{ title|cut:' ' }}">
-{% if choices|slice:"4:" %}
-    <li>
-    <select class="w-full rounded-md border border-light-300 dark:border-dark-300 bg-light-0 dark:bg-dark-0 py-2 pl-3 pr-12 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-        onchange="go_from_select(this.options[this.selectedIndex].value)">
-    {% for choice in choices %}
-        <option{% if choice.selected %} selected="selected"{% endif %}
-         value="{{ choice.query_string|iriencode }}">{{ choice.display }}</option>
-    {% endfor %}
-    </select>
-    </li>
-{% else %}
-    {% for choice in choices %}
-        <li{% if choice.selected %} class="selected"{% endif %}>
-        <a href="{{ choice.query_string|iriencode }}">{{ choice.display }}</a></li>
-    {% endfor %}
-{% endif %}
-</ul>
+
+{% block input_placeholder %}{% if spec.lookup_val %}{{ spec.lookup_val|length }} selected{% else %}{% trans "All" %}{% endif %}{% endblock %}
+
+{% block init %}
+    this.open = false
+    this.term = ''
+    this.allChoices = [{% for choice in choices %}{% if forloop.counter0 > 0 %}{id: '{{ forloop.counter0 }}', text: '{{ choice.display }}', href: '{{ choice.query_string|iriencode }}', selected: {% if choice.selected %}true{% else %}false{% endif %}}{% if not forloop.last %},{% endif %}{% endif %}{% endfor %}]
+    this.choices = this.allChoices
+    this.lookupKwarg = '{{ spec.lookup_kwarg }}'
+{% endblock %}
+
+{% block choice_href %}
+    let url = new URL(window.location)
+    let params = new URLSearchParams(url.search)
+    let lookupValue = params.get(this.lookupKwarg)
+    if (lookupValue !== null) {
+        params.set(this.lookupKwarg, `${lookupValue},${choice.text}`)
+    } else {
+        params.set(this.lookupKwarg, choice.text)
+    }
+    return `?${params.toString()}`
+{% endblock %}
+
+{% block choice_selected %}
+    return choice.selected
+{% endblock %}
+
+{% block input_change %}
+    this.choices = []
+    this.open = true
+    this.term = event.target.value
+    if (this.term === '') {
+        this.choices = this.allChoices
+    } else {
+        this.allChoices.forEach(choice => {
+            if (choice.text.toLowerCase().includes(this.term.toLowerCase())) {
+                this.choices.push(choice)
+            }
+        })
+    }
+{% endblock %}
+
+{% block template_pagination %}{% endblock %}
