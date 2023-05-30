@@ -101,3 +101,4 @@ media/
 
 staticfiles/
 cache/
+django_admin_tailwind/static/*

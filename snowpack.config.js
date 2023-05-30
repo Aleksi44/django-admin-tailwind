@@ -1,5 +1,5 @@
 const httpProxy = require('http-proxy');
-const proxy = httpProxy.createServer({target: 'http://127.0.0.1:8000'});
+const proxy = httpProxy.createServer({target: 'http://127.0.0.1:4243'});
 const { version } = require('./package.json');
 
 module.exports = {

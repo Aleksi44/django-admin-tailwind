@@ -126,7 +126,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'build')
 ]
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -138,17 +138,3 @@ SITE_ID = 1
 INTERNAL_IPS = (
     '127.0.0.1',
 )
-
-# AWS
-
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID', '')
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY', '')
-AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', '')
-AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME', '')
-AWS_S3_CUSTOM_DOMAIN = config('AWS_S3_CUSTOM_DOMAIN', '')
-AWS_IS_GZIPPED = True
-AWS_DEFAULT_ACL = 'public-read'
-AWS_S3_FILE_OVERWRITE = False
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'public, max-age=31536000',
-}
